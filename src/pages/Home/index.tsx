@@ -11,6 +11,7 @@ import {
     Header,
     TotalCars,
     HeaderContent,
+    CarList
 } from './styles';
 
 export const Home = () => {
@@ -52,12 +53,14 @@ export const Home = () => {
                     </TotalCars>
                 </HeaderContent>
             </Header>
-            <Car 
-                data={carData}
+            <CarList
+                data={[1,2,3,4,5,6,7,8,9]}
+                keyExtractor={item=>String(item)}
+                renderItem={(item)=> <Car data={carData} />}
             />
-            <Car 
-                data={carData2}
-            />
+                
+
+            
          </Container>
     );
 }
