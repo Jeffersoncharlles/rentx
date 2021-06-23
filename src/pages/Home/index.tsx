@@ -1,14 +1,20 @@
 import React from 'react';
+import {StatusBar} from 'react-native';
 
 import {
     Container,
-    Title
+    Header,
 } from './styles';
 
 export const Home = () => {
     return (
         <Container>
-            <Title>HOME</Title>
+            <StatusBar 
+                barStyle="light-content"
+                backgroundColor="transparent"
+                translucent
+            />
+            <Header></Header>
          </Container>
     );
 }
