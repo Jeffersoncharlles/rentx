@@ -14,17 +14,31 @@ import {
     CarImage,
 } from './styles';
 
-export const Car = () => {
+interface CarData {
+    brand: string;
+    name: string;
+    rent: {
+        period: string;
+        price: number;
+    },
+    thumbnail: string;
+}
+
+interface Props {
+    data:  CarData
+}
+
+export const Car = ({data}: Props) => {
     return (
         <Container>
             <Details>
-                <Brand>Audi</Brand>
-                <Name>Rs 5 Coupe</Name>
+                <Brand>{data.brand}</Brand>
+                <Name>{data.name}</Name>
            
                 <About>
                     <Rent>
-                        <Period>Ao dia</Period>
-                        <Price>R$ 120</Price>
+                        <Period>{data.rent.period}</Period>
+                        <Price>{`R$ ${data.rent.price}`}</Price>
                     </Rent>
 
                     <Type>
@@ -33,7 +47,10 @@ export const Car = () => {
                 </About>
             </Details>
 
-            <CarImage source={{uri: 'https://freepngimg.com/thumb/audi/35227-5-audi-rs5-red-thumb.png'}} />
+            <CarImage  
+                source={{uri: data.thumbnail }} 
+                resizeMode="cover"
+            />
         </Container>
     );
 }

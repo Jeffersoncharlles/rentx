@@ -14,6 +14,26 @@ import {
 } from './styles';
 
 export const Home = () => {
+    const carData = {
+        brand: 'audi',
+        name: 'RS 5 Coupe',
+        rent: {
+            period: 'ao dia',
+            price: 120,
+        },
+        thumbnail: 'https://freepngimg.com/thumb/audi/35227-5-audi-rs5-red-thumb.png',
+    }
+    const carData2 = {
+        brand: 'Porsche',
+        name: 'Panamera',
+        rent: {
+            period: 'ao dia',
+            price: 340,
+        },
+        thumbnail: 'https://freepngimg.com/thumb/porsche/1-2-porsche-free-png-image-thumb.png',
+    }
+
+
     return (
         <Container>
             <StatusBar 
@@ -32,7 +52,12 @@ export const Home = () => {
                     </TotalCars>
                 </HeaderContent>
             </Header>
-            <Car />
+            <Car 
+                data={carData}
+            />
+            <Car 
+                data={carData2}
+            />
          </Container>
     );
 }
