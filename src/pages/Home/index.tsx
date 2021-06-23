@@ -1,6 +1,8 @@
 import React from 'react';
 import {StatusBar} from 'react-native';
 
+import Logo from '../../assets/logo.svg';
+
 import {
     Container,
     Header,
@@ -14,7 +16,9 @@ export const Home = () => {
                 backgroundColor="transparent"
                 translucent
             />
-            <Header></Header>
+            <Header>
+                <Logo />
+            </Header>
          </Container>
     );
 }
