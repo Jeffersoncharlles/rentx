@@ -5,6 +5,7 @@ import {ImageSlider} from '../../components/ImageSlider';
 import {
     Container,
     Header,
+    CarImages,
 } from './styles';
 
 export const CarDetails = () => {
@@ -13,9 +14,12 @@ export const CarDetails = () => {
             <Header>
                 <BackButton onPress={()=>{}}/>
             </Header>
-            <ImageSlider 
-                imagesUrl={['https://freepngimg.com/thumb/porsche/1-2-porsche-free-png-image-thumb.png']} 
-            />
+            <CarImages>
+                <ImageSlider 
+                    imagesUrl={['https://freepngimg.com/thumb/porsche/1-2-porsche-free-png-image-thumb.png']} 
+                />
+            </CarImages>
+            
          </Container>
     );
 }
