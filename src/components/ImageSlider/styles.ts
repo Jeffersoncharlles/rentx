@@ -9,9 +9,9 @@ export const Container = styled.View`
     width: 100%;
 `;
 export const ImageIndexes = styled.View`
- flex-direction: row;
- align-self: flex-end;
- padding-right: 24px;
+    flex-direction: row;
+    align-self: flex-end;
+    padding-right: 24px;
 `;
 export const ImageIndex = styled.View<ImageIndexProps>`
     width: 6px;
