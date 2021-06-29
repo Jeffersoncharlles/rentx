@@ -51,6 +51,14 @@ export const Name = styled.Text`
 `;
 
 export const Rent = styled.View``;
+//se nao comber joga na linha de baixo
+export const Accessories = styled.View`
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 16px;
+`;
 
 export const Period = styled.Text`
     font-family: ${({theme})=>theme.fonts.secondary_500};
