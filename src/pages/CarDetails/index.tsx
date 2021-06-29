@@ -69,7 +69,7 @@ export const CarDetails = () => {
                 </About>
             </Content>
             <Footer>
-                <Button title="botão"  />
+                <Button title="botão"  color="" />
             </Footer>
          </Container>
     );
