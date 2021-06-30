@@ -1,8 +1,11 @@
 import React from 'react';
+import { StatusBar } from 'react-native';
 import {BackButton} from '../../components/BackButton';
 import { useTheme } from 'styled-components';
 
 import ArrowSvg from '../../assets/arrow.svg';
+
+import { Button } from '../../components/Button';
 
 import {
     Container,
@@ -12,7 +15,10 @@ import {
     DateInfo,
     DateTitle,
     DateValue,
+    Content,
+    Footer,
 } from './styles';
+
 
 export const Scheduling = () => {
 
@@ -23,6 +29,12 @@ export const Scheduling = () => {
     return (
         <Container>
             <Header>
+                <StatusBar 
+                    barStyle="light-content"
+                    translucent
+                    backgroundColor="transparent"
+
+                />
                 <BackButton
                     onPress={()=>{}}
                     color={theme.colors.shape}
@@ -49,6 +61,15 @@ export const Scheduling = () => {
                 </RentalPeriod>
             </Header>
 
+            <Content>
+
+            </Content>
+
+            <Footer>
+                <Button 
+                   title="Confirmar" 
+                />
+            </Footer>
 
          </Container>
     );

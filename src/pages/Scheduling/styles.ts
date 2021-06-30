@@ -18,6 +18,7 @@ export const Header = styled.View`
 
     justify-content: center;
     padding: 25px;
+    padding-top: ${getBottomSpace()+30}px;
 `;
 
 export const Title = styled.Text`
@@ -35,6 +36,8 @@ export const RentalPeriod = styled.View`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+
+    margin: 32px 0px;
 `;
 
 export const DateInfo = styled.View`
@@ -58,3 +61,8 @@ export const DateValue = styled.Text<DateValueProps>`
         padding-bottom:5px ;
     `};
 `;
+
+export const Content = styled.View``;
+
+export const Footer = styled.View``;
+
