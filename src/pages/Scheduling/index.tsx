@@ -36,14 +36,14 @@ export const Scheduling = () => {
                 <RentalPeriod>
                     <DateInfo>
                         <DateTitle>DE</DateTitle>
-                        <DateValue></DateValue>
+                        <DateValue selected={true}>30/06/2021</DateValue>
                     </DateInfo>
 
                     <ArrowSvg />
 
                     <DateInfo>
                         <DateTitle>ATE</DateTitle>
-                        <DateValue></DateValue>
+                        <DateValue selected={false}></DateValue>
                     </DateInfo>
 
                 </RentalPeriod>

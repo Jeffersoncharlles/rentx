@@ -1,7 +1,10 @@
-import styled from 'styled-components/native';
+import styled, {css} from 'styled-components/native';
 import { getBottomSpace, getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { RFValue } from 'react-native-responsive-fontsize';
 
+interface DateValueProps {
+    selected: boolean;
+}
 
 export const Container = styled.View`
     flex: 1;
@@ -34,8 +37,24 @@ export const RentalPeriod = styled.View`
     align-items: center;
 `;
 
-export const DateInfo = styled.View``;
+export const DateInfo = styled.View`
+    width: 30%;
+`;
 
-export const DateTitle = styled.Text``;
+export const DateTitle = styled.Text`
+    color: ${({theme})=>theme.colors.text};
+    font-family: ${({theme})=>theme.fonts.secondary_500};
+    font-size: ${RFValue(10)}px;
+`;
 
-export const DateValue = styled.Text``;
+export const DateValue = styled.Text<DateValueProps>`
+    color: ${({theme})=>theme.colors.shape};
+    font-family: ${({theme})=>theme.fonts.primary_500};
+    font-size: ${RFValue(15)}px;
+
+    ${({selected, theme}) => !selected && css`
+        border-bottom-width:1px ;
+        border-bottom-color:${theme.colors.text} ;
+        padding-bottom:5px ;
+    `};
+`;
