@@ -62,7 +62,17 @@ export const DateValue = styled.Text<DateValueProps>`
     `};
 `;
 
-export const Content = styled.View``;
+export const Content = styled.ScrollView.attrs({
+    contentContainerStyle:{
+        paddingBottom:24
+    },
+    showsVerticalScrollIndicator:false
+})`
 
-export const Footer = styled.View``;
+`;
+
+export const Footer = styled.View`
+    padding: 24px;
+
+`;
 
