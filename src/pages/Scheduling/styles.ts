@@ -5,13 +5,21 @@ import { RFValue } from 'react-native-responsive-fontsize';
 
 export const Container = styled.View`
     flex: 1;
+    background-color: ${({theme})=>theme.colors.background_secondary};
 `;
 export const Header = styled.View`
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    width: 100%;
 
-    position: absolute;
-    margin-top: ${getStatusBarHeight()+ 18}px;
-    margin-left: 24px;
+    height: 325px;
+    background-color: ${({theme})=>theme.colors.header};
+    justify-content: center;
+    padding: 25px;
+`;
+
+export const Title = styled.Text`
+    color: ${({theme})=>theme.colors.shape};
+    font-family: ${({theme})=>theme.fonts.secondary_600};
+    font-size: ${RFValue(34)}px;
+    margin-top: 24px;
+
 `;
