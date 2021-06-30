@@ -9,9 +9,10 @@ export const Container = styled.View`
 `;
 export const Header = styled.View`
     width: 100%;
-
     height: 325px;
+
     background-color: ${({theme})=>theme.colors.header};
+
     justify-content: center;
     padding: 25px;
 `;
@@ -20,6 +21,21 @@ export const Title = styled.Text`
     color: ${({theme})=>theme.colors.shape};
     font-family: ${({theme})=>theme.fonts.secondary_600};
     font-size: ${RFValue(34)}px;
+
+
     margin-top: 24px;
 
 `;
+
+export const RentalPeriod = styled.View`
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+export const DateInfo = styled.View``;
+
+export const DateTitle = styled.Text``;
+
+export const DateValue = styled.Text``;
