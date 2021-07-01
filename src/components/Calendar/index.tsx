@@ -15,7 +15,7 @@ LocaleConfig.locales['pt-br'] = {
     dayNamesShort: ['DOM','SEG','TER','QUA','QUI','SEX','SAB'],
     today: 'Hoje'
 }
-
+LocaleConfig.defaultLocale = 'pt-br';
 export const Calendar = () => {
     const theme = useTheme();
 
@@ -42,11 +42,16 @@ export const Calendar = () => {
                     textDayFontFamily: theme.fonts.primary_400,
                     textDayHeaderFontFamily: theme.fonts.primary_500,
                     textDayHeaderFontSize:10,
+                    textMonthFontSize:20,
+                    monthTextColor:theme.colors.title,
+                    textMonthFontFamily:theme.fonts.secondary_600,
                     arrowStyle: {
                         marginHorizontal: -15
                     }
                 }}
 
+                firstDay={1}
+                minDate={new Date()}
             />
          </Container>
     );
