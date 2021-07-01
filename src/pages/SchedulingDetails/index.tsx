@@ -35,6 +35,11 @@ import {
     DateInfo,
     DateTitle,
     DateValue,
+    RentalPrice,
+    RentalPriceLabel,
+    RentalPriceDetails,
+    RentalPriceTotal,
+    RentalPriceDetailsView,
 } from './styles';
 
 
@@ -100,6 +105,14 @@ export const SchedulingDetails = () => {
                    </DateInfo>
 
                </RentalPeriod>
+
+               <RentalPrice>
+                   <RentalPriceLabel>TOTAL</RentalPriceLabel>
+                   <RentalPriceDetailsView>
+                        <RentalPriceDetails>R$ 580 x3 diárias</RentalPriceDetails>
+                        <RentalPriceTotal>R$ 2.900</RentalPriceTotal>
+                   </RentalPriceDetailsView>
+               </RentalPrice>
             </Content>
             <Footer>
                 <Button title="botão"  color="" />
