@@ -84,10 +84,18 @@ export const RentalPeriod = styled.View`
     justify-content: space-between;
     align-items: center;
     margin-top: 40px;
+
+    border-bottom-width: 1px;
+    border-bottom-color: ${({theme})=>theme.colors.line};
+    padding-bottom: 16px;
 `;
 
 export const CalendarIcon = styled.View`
-
+    width: 48px;
+    height: 48px;
+    background-color: ${({theme})=>theme.colors.main};
+    justify-content: center;
+    align-items: center;
 `;
 
 export const DateInfo = styled.View`
@@ -95,9 +103,14 @@ export const DateInfo = styled.View`
 `;
 
 export const DateTitle = styled.Text`
-
+    font-family: ${({theme})=>theme.fonts.primary_500};
+    color: ${({theme})=>theme.colors.text_details};
+    font-size: ${RFValue(10)}px;
+    text-transform: uppercase;
 `;
 
 export const DateValue = styled.Text`
-
+    font-family: ${({theme})=>theme.fonts.primary_500};
+    color: ${({theme})=>theme.colors.title};
+    font-size: ${RFValue(15)}px;
 `;
