@@ -18,6 +18,7 @@ import {
     Content,
     Footer,
 } from './styles';
+import { Calendar } from '../../components/Calendar';
 
 
 export const Scheduling = () => {
@@ -62,7 +63,7 @@ export const Scheduling = () => {
             </Header>
 
             <Content>
-
+                <Calendar />
             </Content>
 
             <Footer>

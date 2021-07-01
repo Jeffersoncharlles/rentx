@@ -70,6 +70,7 @@ export const Content = styled.ScrollView.attrs({
 })`
 
 `;
+// showsVerticalScrollIndicator //false para sumir a barra de rolagem
 
 export const Footer = styled.View`
     padding: 24px;
