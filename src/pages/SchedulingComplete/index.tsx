@@ -3,12 +3,14 @@ import { useWindowDimensions } from 'react-native';
 import LogoSvg from '../../assets/logo_background_gray.svg';
 import DoneSvg from '../../assets/done.svg';
 
+import { ConfirmaButton } from '../../components/ConfirmaButton';
+
 import {
     Container,
     Content,
     Title,
     Message,
-
+    Footer,
 } from './styles';
 
 export const SchedulingComplete = () => {
@@ -35,7 +37,9 @@ export const SchedulingComplete = () => {
                 pegar o seu automóvel.
                 </Message>
             </Content>
-
+            <Footer>
+                <ConfirmaButton />
+            </Footer>
          </Container>
     );
 }
