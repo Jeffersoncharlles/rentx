@@ -11,7 +11,7 @@ import {
   Archivo_500Medium,
   Archivo_600SemiBold
 } from '@expo-google-fonts/archivo';
-import { SchedulingDetails } from './src/pages/SchedulingDetails';
+import { SchedulingComplete } from './src/pages/SchedulingComplete';
 import theme from './src/styles/theme';
 
 
@@ -30,7 +30,7 @@ export default function App() {
     }
   return (
     <ThemeProvider theme={theme}>
-      <SchedulingDetails />
+      <SchedulingComplete />
     </ThemeProvider>
     )
 }

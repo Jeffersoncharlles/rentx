@@ -115,7 +115,7 @@ export const SchedulingDetails = () => {
                </RentalPrice>
             </Content>
             <Footer>
-                <Button title="botão"  color="" />
+                <Button title="Alugar agora"  color={theme.colors.success} />
             </Footer>
          </Container>
     );
