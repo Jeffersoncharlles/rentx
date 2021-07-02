@@ -38,7 +38,9 @@ export const SchedulingComplete = () => {
                 </Message>
             </Content>
             <Footer>
-                <ConfirmaButton />
+                <ConfirmaButton 
+                    title="Ok"
+                />
             </Footer>
          </Container>
     );
