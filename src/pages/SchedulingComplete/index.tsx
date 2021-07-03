@@ -54,6 +54,7 @@ export const SchedulingComplete = () => {
             <Footer>
                 <ConfirmaButton 
                     title="Ok"
+                    onPress={handleOKCompleteRoutes}
                 />
             </Footer>
          </Container>
