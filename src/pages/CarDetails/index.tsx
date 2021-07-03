@@ -29,7 +29,15 @@ import {
     
 } from './styles';
 
+import { useNavigation } from '@react-navigation/native';
+
 export const CarDetails = () => {
+    const navigation = useNavigation();
+
+    const handleSchedulingRoutes = ()=>{
+        navigation.navigate('Scheduling');
+    }
+
     return (
         <Container>
             <Header>
@@ -69,7 +77,7 @@ export const CarDetails = () => {
                 </About>
             </Content>
             <Footer>
-                <Button title="botão"  color="" />
+                <Button title="Confirmar"  color=""  />
             </Footer>
          </Container>
     );

@@ -62,7 +62,12 @@ export const Home = () => {
             <CarList
                 data={[1,2,3,4,5,6,7,8,9]}
                 keyExtractor={item=>String(item)}
-                renderItem={(item)=> <Car data={carData} onPress={handleCarDetailsRoutes} />}
+                renderItem={(item)=> 
+                    <Car 
+                        data={carData} 
+                        onPress={handleCarDetailsRoutes} 
+                    />
+                }
             />
                 
 

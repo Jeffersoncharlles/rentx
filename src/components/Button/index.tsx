@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTheme } from 'styled-components';
 
 import {
     Container,
@@ -12,8 +13,10 @@ interface Props{
 }
 
 export const Button = ({title, color, ...rest}: Props) => {
+    const themes = useTheme();
+
     return (
-        <Container {...rest} color={color}>
+        <Container {...rest} color={color ? color : themes.colors.main}>
             <Title>{title}</Title>
          </Container>
     );
