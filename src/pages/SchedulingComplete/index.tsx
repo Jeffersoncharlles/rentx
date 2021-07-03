@@ -13,9 +13,16 @@ import {
     Message,
     Footer,
 } from './styles';
+import { useNavigation } from '@react-navigation/native';
 
 export const SchedulingComplete = () => {
     const { width } = useWindowDimensions();
+    const navigation = useNavigation();
+
+
+    const handleOKCompleteRoutes = () =>{
+        navigation.navigate('Home');
+    }
 
     return (
         <Container>

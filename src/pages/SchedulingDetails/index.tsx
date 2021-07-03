@@ -41,11 +41,17 @@ import {
     RentalPriceTotal,
     RentalPriceDetailsView,
 } from './styles';
+import { useNavigation } from '@react-navigation/native';
 
 
 export const SchedulingDetails = () => {
     const theme = useTheme();
+    const navigation = useNavigation();
 
+
+    const handleSchedulingCompleteRoutes = () =>{
+        navigation.navigate('SchedulingComplete');
+    }
 
     return (
         <Container>
@@ -115,7 +121,11 @@ export const SchedulingDetails = () => {
                </RentalPrice>
             </Content>
             <Footer>
-                <Button title="Alugar agora"  color={theme.colors.success} />
+                <Button 
+                    title="Alugar agora"  
+                    color={theme.colors.success} 
+                    onPress={handleSchedulingCompleteRoutes}
+                />
             </Footer>
          </Container>
     );

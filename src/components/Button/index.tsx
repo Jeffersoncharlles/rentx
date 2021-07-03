@@ -9,14 +9,14 @@ import {
 interface Props{
     title: string;
     color?: string;
-    
+    onPress: ()=> void;
 }
 
-export const Button = ({title, color, ...rest}: Props) => {
+export const Button = ({title, color, onPress}: Props) => {
     const themes = useTheme();
 
     return (
-        <Container {...rest} color={color ? color : themes.colors.main}>
+        <Container  color={color ? color : themes.colors.main} onPress={onPress}>
             <Title>{title}</Title>
          </Container>
     );
