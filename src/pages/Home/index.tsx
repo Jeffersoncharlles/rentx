@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { api } from '../../services/api';
 import {StatusBar} from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -18,6 +18,8 @@ import {
 } from './styles';
 
 export const Home = () => {
+    const [cars,setCars] = useState([]);
+    const [loading,setLoading] = useState(true);
     const navigation = useNavigation();
 
     const carData = {
@@ -42,6 +44,21 @@ export const Home = () => {
     const handleCarDetailsRoutes = ()=>{
         navigation.navigate('CarDetails');
     }
+
+    useEffect(()=>{
+        const fetchCar = async ()=>{
+          try {
+            const response = await api.get('/cars');
+            setCars(response.data);
+          } catch (error) {
+              console.log(error);
+          }finally{
+              setLoading(false);
+          }
+        };
+
+        fetchCar();
+    },[]);
 
     return (
         <Container>
