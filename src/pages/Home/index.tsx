@@ -1,11 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, {useEffect} from 'react';
+import { api } from '../../services/api';
 import {StatusBar} from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 import Logo from '../../assets/logo.svg';
 
 import {Car} from '../../components/Car';
+
 
 import {
     Container,
