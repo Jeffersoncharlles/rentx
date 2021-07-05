@@ -1,8 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import { api } from '../../services/api';
 import {StatusBar} from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
+
+import { api } from '../../services/api';
+// import CarDTO from '../../dtos/CarDTO';
+
+
 
 import Logo from '../../assets/logo.svg';
 
@@ -79,11 +83,11 @@ export const Home = () => {
                 </HeaderContent>
             </Header>
             <CarList
-                data={[1,2,3,4,5,6,7,8,9]}
-                keyExtractor={item=>String(item)}
-                renderItem={(item)=> 
+                data={cars}
+                keyExtractor={item=>String(item.id)}
+                renderItem={({item})=> 
                     <Car 
-                        data={carData} 
+                        data={item} 
                         onPress={handleCarDetailsRoutes} 
                     />
                 }
