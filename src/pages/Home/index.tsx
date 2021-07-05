@@ -4,6 +4,7 @@ import {StatusBar} from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 import { api } from '../../services/api';
+import { Load } from '../../components/Load';
 // import CarDTO from '../../dtos/CarDTO';
 
 
@@ -82,17 +83,19 @@ export const Home = () => {
                     </TotalCars>
                 </HeaderContent>
             </Header>
-            <CarList
-                data={cars}
-                keyExtractor={item=>String(item.id)}
-                renderItem={({item})=> 
-                    <Car 
-                        data={item} 
-                        onPress={handleCarDetailsRoutes} 
-                    />
-                }
-            />
-                
+            
+            {loading ? <Load/> :
+                <CarList
+                    data={cars}
+                    keyExtractor={item=>String(item.id)}
+                    renderItem={({item})=> 
+                        <Car 
+                            data={item} 
+                            onPress={handleCarDetailsRoutes} 
+                        />
+                    }
+                />
+            }
 
             
          </Container>
