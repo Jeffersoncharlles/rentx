@@ -55,7 +55,7 @@ export const CarDetails = () => {
             </Header>
             <CarImages>
                 <ImageSlider 
-                    imagesUrl={['https://freepngimg.com/thumb/porsche/1-2-porsche-free-png-image-thumb.png']} 
+                    imagesUrl={car.photos} 
                 />
             </CarImages>
             <Content >
@@ -72,18 +72,20 @@ export const CarDetails = () => {
                 </Details>
 
                 <Accessories>
-                    <Accessory name= "380km/h" icon={SpeedSvg} />
-                    <Accessory name= "3.2s" icon={accelerationSvg} />
-                    <Accessory name= "auto" icon={exchangeSvg} />
-                    <Accessory name= "800 hp" icon={forceSvg} />
-                    <Accessory name= "Gasolina" icon={gasolineSvg} />
-                    <Accessory name= "2 Pessoas" icon={peopleSvg} />
+                    {
+                        car.accessories.map(item=>(
+                            <Accessory 
+                                key={item.type}
+                                name={item.name}
+                                icon={SpeedSvg} 
+                            />
+                            ))
+                        
+                    }
+                    
                 </Accessories>
                 <About>
-                Este é automóvel desportivo. 
-                Surgiu do lendário touro de lide indultado na praça 
-                Real Maestranza de Sevilla. 
-                É um belíssimo carro para quem gosta de acelerar.
+                    {car.about}
                 </About>
             </Content>
             <Footer>
