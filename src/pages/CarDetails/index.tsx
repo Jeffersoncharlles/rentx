@@ -30,9 +30,9 @@ import {
 } from './styles';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
-
+import CarDtos from '../../dtos/CarDTO';
 interface Params {
-    car: any;
+    car: CarDtos;
 }
 
 export const CarDetails = () => {
