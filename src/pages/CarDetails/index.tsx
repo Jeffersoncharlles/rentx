@@ -29,10 +29,16 @@ import {
     
 } from './styles';
 
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+
+interface Params {
+    car: any;
+}
 
 export const CarDetails = () => {
     const navigation = useNavigation();
+    const route = useRoute();
+    const  { car } = route.params as Params;
 
     const handleSchedulingRoutes = ()=>{
         navigation.navigate('Scheduling');
@@ -55,13 +61,13 @@ export const CarDetails = () => {
             <Content >
                 <Details>
                     <Description>
-                        <Brand>LAmborghin</Brand>
-                        <Name>Hurucan</Name>
+                        <Brand>{car.brand}</Brand>
+                        <Name>{car.name}</Name>
                     </Description>
                     
                     <Rent>
-                        <Period>Ao Dia</Period>
-                        <Price>R$ 580</Price>
+                        <Period>{car.rent.period}</Period>
+                        <Price>R$ {car.rent.price}</Price>
                     </Rent>
                 </Details>
 
