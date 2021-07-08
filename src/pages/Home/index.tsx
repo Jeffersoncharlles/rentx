@@ -5,7 +5,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 
 import { api } from '../../services/api';
 import { Load } from '../../components/Load';
-// import CarDTO from '../../dtos/CarDTO';
+import CarDTO from '../../dtos/CarDTO';
 
 
 
@@ -27,7 +27,7 @@ export const Home = () => {
     const [loading,setLoading] = useState(true);
     const navigation = useNavigation();
 
-    const handleCarDetailsRoutes = (car : any)=>{
+    const handleCarDetailsRoutes = (car : CarDTO)=>{
         navigation.navigate('CarDetails', {car});
     }
 
