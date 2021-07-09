@@ -5,8 +5,8 @@ export const getPlatformDate = (date: Date) =>{
     // if (Platform.OS === 'ios') {
     //    return  addDays(date,1) ;
     // }else{
-    //     return  date;
+    //     return  addDays(date,1);
     // }
 
-    return  Platform.OS === 'ios' ?  addDays(date,1) : date ;
+    return  Platform.OS === 'ios' ?  addDays(date,1) :  addDays(date,1) ;
 }
