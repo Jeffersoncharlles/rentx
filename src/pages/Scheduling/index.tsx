@@ -32,6 +32,10 @@ export const Scheduling = () => {
         navigation.navigate('SchedulingDetails');
     }
 
+    const handleBack = () =>{
+        navigation.goBack();
+    }
+
     return (
         <Container>
             <Header>
@@ -42,7 +46,7 @@ export const Scheduling = () => {
 
                 />
                 <BackButton
-                    onPress={()=>{}}
+                    onPress={handleBack}
                     color={theme.colors.shape}
                 />
                 <Title>
