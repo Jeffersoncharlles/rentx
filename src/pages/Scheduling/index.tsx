@@ -18,7 +18,7 @@ import {
     Content,
     Footer,
 } from './styles';
-import { Calendar , DayProps} from '../../components/Calendar';
+import { Calendar , DayProps ,generateInterval, MarkedDatesProps} from '../../components/Calendar';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 
@@ -26,6 +26,7 @@ import { useState } from 'react';
 export const Scheduling = () => {
     const navigation = useNavigation();
     const [lastSelectedDate, setLastSelectedDate] = useState<DayProps>({} as DayProps);
+    const [markedDates, setMarkedDates] = useState<MarkedDatesProps>({} as MarkedDatesProps);
 
 
     const theme = useTheme();
@@ -49,7 +50,8 @@ export const Scheduling = () => {
 
         setLastSelectedDate(end);
 
-        const interval = '';
+        const interval = generateInterval(start, end);
+        setMarkedDates(interval);
     }
 
     return (
@@ -89,7 +91,8 @@ export const Scheduling = () => {
 
             <Content>
                 <Calendar 
-                    
+                    markedDates={markedDates}
+                    onDayPress={handleChangeDates}
                 
                 />
             </Content>
