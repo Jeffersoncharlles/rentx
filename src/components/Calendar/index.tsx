@@ -13,6 +13,7 @@ LocaleConfig.locales['pt-br'] = ptBr;
 LocaleConfig.defaultLocale = 'pt-br';
 
 
+//Interface Período
 interface MarkedDatesProps {
     [date: string]:{
         color: string;
@@ -22,12 +23,21 @@ interface MarkedDatesProps {
     }
 }
 
+//interface dia especifico
+interface DayProps {
+    dateString: string;
+    day:number;
+    month:number;
+    year:number;
+    timestamp:number;
+}
+
 interface CalendarProps {
     markedDates: MarkedDatesProps;
     onDayPress: DateCallbackHandler;
 }
 
-export const Calendar = ({markedDates, onDayPress}: CalendarProps) => {
+const Calendar = ({markedDates, onDayPress}: CalendarProps) => {
     const theme = useTheme();
 
     return (
@@ -70,4 +80,10 @@ export const Calendar = ({markedDates, onDayPress}: CalendarProps) => {
             />
          </Container>
     );
+}
+
+export {
+    Calendar,
+    MarkedDatesProps,
+    DayProps
 }

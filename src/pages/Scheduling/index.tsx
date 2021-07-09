@@ -18,12 +18,14 @@ import {
     Content,
     Footer,
 } from './styles';
-import { Calendar } from '../../components/Calendar';
+import { Calendar , DayProps} from '../../components/Calendar';
 import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
 
 
 export const Scheduling = () => {
     const navigation = useNavigation();
+    const [lastSelectedDate, setLastSelectedDate] = useState<DayProps>({} as DayProps);
 
 
     const theme = useTheme();
@@ -34,6 +36,20 @@ export const Scheduling = () => {
 
     const handleBack = () =>{
         navigation.goBack();
+    }
+    
+    const handleChangeDates = (date: DayProps) =>{
+        let start = !lastSelectedDate.timestamp ? date : lastSelectedDate;
+        let end = date;
+
+        if (start.timestamp > end.timestamp) {
+            start = end ;
+            end = start;
+        }
+
+        setLastSelectedDate(end);
+
+        const interval = '';
     }
 
     return (
@@ -72,7 +88,10 @@ export const Scheduling = () => {
             </Header>
 
             <Content>
-                <Calendar />
+                <Calendar 
+                    
+                
+                />
             </Content>
 
             <Footer>
