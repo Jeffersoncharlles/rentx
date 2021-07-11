@@ -23,7 +23,5 @@ export const generateInterval = (start: DayProps, end: DayProps)=>{
    });
 
    return interval;
-
-   //console.log(test)
 }
 
