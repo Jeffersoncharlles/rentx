@@ -40,6 +40,8 @@ import {getAccessoriesIcon} from '../../utils/getAccessoriesIcon';
 import CarDtos from '../../dtos/CarDTO';
 import { format } from 'date-fns';
 import { getPlatformDate } from '../../utils/getPlatformDate';
+import { api } from '../../services/api';
+import { Alert } from 'react-native';
 
 interface RentalPeriod{
     startFormatted: string;
@@ -62,8 +64,22 @@ export const SchedulingDetails = () => {
     const rentTotal = Number(dates.length * car.rent.price);
 
 
-    const handleSchedulingCompleteRoutes = () =>{
-        navigation.navigate('SchedulingComplete');
+    const handleSchedulingCompleteRoutes = async () =>{
+        const schedulesByCar = await api.get(`/schedules/${car.id}`);
+
+        const unavailable_dates = [
+            ...schedulesByCar.data.unavailable_dates,
+            ...dates,
+        ];
+
+        api.put(`/schedules/${car.id}`, {
+            id:car.id,
+            unavailable_dates
+        })
+        .then(response => navigation.navigate('SchedulingComplete'))
+        .catch(()=> Alert.alert("Não foi possível confirmar o agendamento."));
+
+        
     }
 
     const handleBack = () =>{
