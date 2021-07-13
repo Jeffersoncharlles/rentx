@@ -41,12 +41,28 @@ import {
     RentalPriceTotal,
     RentalPriceDetailsView,
 } from './styles';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation,useRoute } from '@react-navigation/native';
+import CarDtos from '../../dtos/CarDTO';
+import {getAccessoriesIcon} from '../../utils/getAccessoriesIcon';
+
+interface RentalPeriod{
+    start: number;
+    startFormatted: string;
+    end: number;
+    endFormatted: string;
+}
+interface Params {
+    car: CarDtos;
+    dates: RentalPeriod;
+}
 
 
 export const SchedulingDetails = () => {
     const theme = useTheme();
     const navigation = useNavigation();
+    const route = useRoute();
+    const  { car } = route.params as Params;
+    const  { dates } = route.params as Params;
 
 
     const handleSchedulingCompleteRoutes = () =>{
@@ -64,29 +80,33 @@ export const SchedulingDetails = () => {
             </Header>
             <CarImages>
                 <ImageSlider 
-                    imagesUrl={['https://freepngimg.com/thumb/porsche/1-2-porsche-free-png-image-thumb.png']} 
+                    imagesUrl={car.photos} 
                 />
             </CarImages>
             <Content >
                 <Details>
                     <Description>
-                        <Brand>LAmborghin</Brand>
-                        <Name>Hurucan</Name>
+                        <Brand>{car.brand}</Brand>
+                        <Name>{car.name}</Name>
                     </Description>
                     
                     <Rent>
                         <Period>Ao Dia</Period>
-                        <Price>R$ 580</Price>
+                        <Price>R$ {car.rent.price}</Price>
                     </Rent>
                 </Details>
 
                 <Accessories>
-                    <Accessory name= "380km/h" icon={SpeedSvg} />
-                    <Accessory name= "3.2s" icon={accelerationSvg} />
-                    <Accessory name= "auto" icon={exchangeSvg} />
-                    <Accessory name= "800 hp" icon={forceSvg} />
-                    <Accessory name= "Gasolina" icon={gasolineSvg} />
-                    <Accessory name= "2 Pessoas" icon={peopleSvg} />
+                    {
+                            car.accessories.map(item=>(
+                                <Accessory 
+                                    key={item.type}
+                                    name={item.name}
+                                    icon={getAccessoriesIcon(item.type)} 
+                                />
+                                ))
+                            
+                        }
                 </Accessories>
                <RentalPeriod>
                    <CalendarIcon>
@@ -100,7 +120,7 @@ export const SchedulingDetails = () => {
 
                    <DateInfo>
                         <DateTitle>DE</DateTitle>
-                        <DateValue>18/06/2021</DateValue>
+                        <DateValue>{dates.startFormatted}</DateValue>
                    </DateInfo>
 
                    <Feather 
@@ -111,7 +131,7 @@ export const SchedulingDetails = () => {
 
                     <DateInfo>
                         <DateTitle>ATE</DateTitle>
-                        <DateValue>20/06/2021</DateValue>
+                        <DateValue>{dates.endFormatted}</DateValue>
                    </DateInfo>
 
                </RentalPeriod>
