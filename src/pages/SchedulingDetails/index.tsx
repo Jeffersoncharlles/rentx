@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Feather } from '@expo/vector-icons';
 
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -9,12 +9,6 @@ import {ImageSlider} from '../../components/ImageSlider';
 import {Accessory} from '../../components/Accessory';
 import {Button} from '../../components/Button';
 
-import SpeedSvg from '../../assets/speed.svg';
-import accelerationSvg from '../../assets/acceleration.svg';
-import exchangeSvg from '../../assets/exchange.svg';
-import forceSvg from '../../assets/force.svg';
-import gasolineSvg from '../../assets/gasoline.svg';
-import peopleSvg from '../../assets/people.svg';
 
 import {
     Container,
@@ -42,27 +36,27 @@ import {
     RentalPriceDetailsView,
 } from './styles';
 import { useNavigation,useRoute } from '@react-navigation/native';
-import CarDtos from '../../dtos/CarDTO';
 import {getAccessoriesIcon} from '../../utils/getAccessoriesIcon';
+import CarDtos from '../../dtos/CarDTO';
+import { format } from 'date-fns';
+import { getPlatformDate } from '../../utils/getPlatformDate';
 
 interface RentalPeriod{
-    start: number;
     startFormatted: string;
-    end: number;
     endFormatted: string;
 }
 interface Params {
     car: CarDtos;
-    dates: RentalPeriod;
+    dates:string[];
 }
 
 
 export const SchedulingDetails = () => {
+    const [rentalPeriod, setRentalPeriod] = useState<RentalPeriod>({} as RentalPeriod);
     const theme = useTheme();
     const navigation = useNavigation();
     const route = useRoute();
-    const  { car } = route.params as Params;
-    const  { dates } = route.params as Params;
+    const  { car, dates } = route.params as Params;
 
 
     const handleSchedulingCompleteRoutes = () =>{
@@ -72,6 +66,13 @@ export const SchedulingDetails = () => {
     const handleBack = () =>{
         navigation.goBack();
     }
+
+    useEffect(()=> {
+        setRentalPeriod({
+            startFormatted: format(getPlatformDate(new Date (dates[0])), 'dd/MM/yyyy'),
+            endFormatted: format(getPlatformDate(new Date (dates[dates.length - 1])), 'dd/MM/yyyy'),
+        })
+    },[]);
 
     return (
         <Container>
@@ -120,7 +121,7 @@ export const SchedulingDetails = () => {
 
                    <DateInfo>
                         <DateTitle>DE</DateTitle>
-                        <DateValue>{dates.startFormatted}</DateValue>
+                        <DateValue>{rentalPeriod.startFormatted}</DateValue>
                    </DateInfo>
 
                    <Feather 
@@ -131,7 +132,7 @@ export const SchedulingDetails = () => {
 
                     <DateInfo>
                         <DateTitle>ATE</DateTitle>
-                        <DateValue>{dates.endFormatted}</DateValue>
+                        <DateValue>{rentalPeriod.endFormatted}</DateValue>
                    </DateInfo>
 
                </RentalPeriod>
