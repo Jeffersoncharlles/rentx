@@ -21,12 +21,22 @@ import {
 import { Calendar , DayProps ,generateInterval, MarkedDatesProps} from '../../components/Calendar';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
+import { format } from 'date-fns';
+import { getPlatformDate } from '../../utils/getPlatformDate';
+
+interface RentalPeriod{
+    start: number;
+    startFormatted: string;
+    end: number;
+    endFormatted: string;
+}
 
 
 export const Scheduling = () => {
     const navigation = useNavigation();
     const [lastSelectedDate, setLastSelectedDate] = useState<DayProps>({} as DayProps);
     const [markedDates, setMarkedDates] = useState<MarkedDatesProps>({} as MarkedDatesProps);
+    const [rentalPeriod, setRentalPeriod] = useState<RentalPeriod>({} as RentalPeriod);
 
 
     const theme = useTheme();
@@ -52,6 +62,16 @@ export const Scheduling = () => {
 
         const interval = generateInterval(start, end);
         setMarkedDates(interval);
+
+        const firstDate = Object.keys(interval)[0]; //pegar a primeira data do objeto
+        const endDate = Object.keys(interval)[Object.keys(interval).length - 1]; //pegar a ultima data do objeto
+
+        setRentalPeriod({
+            start: start.timestamp,
+            end:end.timestamp,
+            startFormatted: format(getPlatformDate(new Date (firstDate)), 'dd/MM/yyyy'),
+            endFormatted: format(getPlatformDate(new Date (endDate)), 'dd/MM/yyyy'),
+        });
     }
 
     return (
@@ -76,14 +96,14 @@ export const Scheduling = () => {
                 <RentalPeriod>
                     <DateInfo>
                         <DateTitle>DE</DateTitle>
-                        <DateValue selected={true}>30/06/2021</DateValue>
+                        <DateValue selected={true}>{rentalPeriod.startFormatted}</DateValue>
                     </DateInfo>
 
                     <ArrowSvg />
 
                     <DateInfo>
                         <DateTitle>ATE</DateTitle>
-                        <DateValue selected={false}></DateValue>
+                        <DateValue selected={false}>{rentalPeriod.endFormatted}</DateValue>
                     </DateInfo>
 
                 </RentalPeriod>
