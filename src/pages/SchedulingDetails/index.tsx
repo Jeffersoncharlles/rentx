@@ -59,6 +59,9 @@ export const SchedulingDetails = () => {
     const  { car, dates } = route.params as Params;
 
 
+    const rentTotal = Number(dates.length * car.rent.price);
+
+
     const handleSchedulingCompleteRoutes = () =>{
         navigation.navigate('SchedulingComplete');
     }
@@ -131,7 +134,7 @@ export const SchedulingDetails = () => {
                     />
 
                     <DateInfo>
-                        <DateTitle>ATE</DateTitle>
+                        <DateTitle>ATÉ</DateTitle>
                         <DateValue>{rentalPeriod.endFormatted}</DateValue>
                    </DateInfo>
 
@@ -140,8 +143,8 @@ export const SchedulingDetails = () => {
                <RentalPrice>
                    <RentalPriceLabel>TOTAL</RentalPriceLabel>
                    <RentalPriceDetailsView>
-                        <RentalPriceDetails>R$ 580 x3 diárias</RentalPriceDetails>
-                        <RentalPriceTotal>R$ 2.900</RentalPriceTotal>
+                        <RentalPriceDetails>{`R$ ${car.rent.price} x${dates.length} diárias`}</RentalPriceDetails>
+                        <RentalPriceTotal>R$ {rentTotal}</RentalPriceTotal>
                    </RentalPriceDetailsView>
                </RentalPrice>
             </Content>
