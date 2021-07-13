@@ -36,7 +36,7 @@ export const CarDetails = () => {
     const  { car } = route.params as Params;
 
     const handleSchedulingRoutes = ()=>{
-        navigation.navigate('Scheduling');
+        navigation.navigate('Scheduling',{car});
     }
 
     const handleBack = () =>{
