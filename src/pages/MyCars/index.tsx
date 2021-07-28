@@ -3,6 +3,7 @@ import CarDTO from '../../dtos/CarDTO';
 import { api } from '../../services/api';
 import { StatusBar, FlatList } from 'react-native';
 import {BackButton} from '../../components/BackButton';
+import {Load} from '../../components/Load';
 import { useNavigation,useRoute } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 import {AntDesign} from '@expo/vector-icons';
@@ -28,6 +29,8 @@ interface CarProps {
     id: string;
     user_id:string;
     car: CarDTO;
+    startDate: string;
+    endDate: string;
 }
 
 
@@ -37,7 +40,7 @@ export const MyCars = () => {
     const [cars, setCars] = useState<CarProps[]>([]);
     const [loading, setLoading] = useState(true);
 
-    const userId = '6';
+    const userId = '1';
     const theme = useTheme();
 
 
@@ -83,38 +86,39 @@ export const MyCars = () => {
                 </SubTitle>
                 
             </Header>
+            {loading ? <Load /> :
+                <Content>
+                    <AppoIntments>
+                        <AppoIsmenesTitle>Agendamentos Feitos</AppoIsmenesTitle>
+                        <AppoIsmenesQuantity>{cars.length}</AppoIsmenesQuantity>
+                    </AppoIntments>
+                    <FlatList 
+                        data={cars}
+                        keyExtractor={item =>item.id}
+                        showsHorizontalScrollIndicator={false}
+                        renderItem={({item})=>(
+                            <CarWapper>
+                                <Car data={item.car} />
+                                <CarFooter>
+                                    <CarFooterTitle>Período</CarFooterTitle>
+                                    <CarFooterPeriod>
+                                        <CarFooterDate>{item.startDate}</CarFooterDate>
+                                        <AntDesign 
+                                            name="arrowright"
+                                            size={20}
+                                            color={theme.colors.title}
+                                            style={{marginHorizontal: 10}}
+                                        />
+                                        <CarFooterDate>{item.endDate}</CarFooterDate>
+                                    </CarFooterPeriod>
+                                </CarFooter>
+                            </CarWapper>
+                        )}
+                    
+                    />
 
-            <Content>
-                <AppoIntments>
-                    <AppoIsmenesTitle>Agendamentos Feitos</AppoIsmenesTitle>
-                    <AppoIsmenesQuantity>05</AppoIsmenesQuantity>
-                </AppoIntments>
-                <FlatList 
-                    data={cars}
-                    keyExtractor={item =>item.id}
-                    showsHorizontalScrollIndicator={false}
-                    renderItem={({item})=>(
-                        <CarWapper>
-                        <Car data={item.car} />
-                        <CarFooter>
-                            <CarFooterTitle>Período</CarFooterTitle>
-                            <CarFooterPeriod>
-                                <CarFooterDate>18/06/2021</CarFooterDate>
-                                <AntDesign 
-                                    name="arrowright"
-                                    size={20}
-                                    color={theme.colors.title}
-                                    style={{marginHorizontal: 10}}
-                                />
-                                <CarFooterDate>20/06/2021</CarFooterDate>
-                            </CarFooterPeriod>
-                        </CarFooter>
-                        </CarWapper>
-                    )}
-                
-                />
-
-            </Content>
+                </Content>
+            }
 
          </Container>
     );
