@@ -5,6 +5,7 @@ import { StatusBar, FlatList } from 'react-native';
 import {BackButton} from '../../components/BackButton';
 import { useNavigation,useRoute } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
+import {AntDesign} from '@expo/vector-icons';
 
 import {
     Container,
@@ -15,6 +16,11 @@ import {
     AppoIntments,
     AppoIsmenesTitle,
     AppoIsmenesQuantity,
+    CarWapper,
+    CarFooter,
+    CarFooterTitle,
+    CarFooterPeriod,
+    CarFooterDate,
 } from './styles';
 import { Car } from '../../components/Car';
 
@@ -31,7 +37,7 @@ export const MyCars = () => {
     const [cars, setCars] = useState<CarProps[]>([]);
     const [loading, setLoading] = useState(true);
 
-    const userId = '1';
+    const userId = '6';
     const theme = useTheme();
 
 
@@ -88,7 +94,22 @@ export const MyCars = () => {
                     keyExtractor={item =>item.id}
                     showsHorizontalScrollIndicator={false}
                     renderItem={({item})=>(
+                        <CarWapper>
                         <Car data={item.car} />
+                        <CarFooter>
+                            <CarFooterTitle>Período</CarFooterTitle>
+                            <CarFooterPeriod>
+                                <CarFooterDate>18/06/2021</CarFooterDate>
+                                <AntDesign 
+                                    name="arrowright"
+                                    size={20}
+                                    color={theme.colors.title}
+                                    style={{marginHorizontal: 10}}
+                                />
+                                <CarFooterDate>20/06/2021</CarFooterDate>
+                            </CarFooterPeriod>
+                        </CarFooter>
+                        </CarWapper>
                     )}
                 
                 />
