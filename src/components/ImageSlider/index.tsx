@@ -17,10 +17,17 @@ export const ImageSlider = ({imagesUrl}:Props) => {
     return (
         <Container>
             <ImageIndexes>
-                <ImageIndex active={true} />
-                <ImageIndex active={false} />
-                <ImageIndex active={false} />
-                <ImageIndex active={false} />
+                {
+                    imagesUrl.map((item,index)=>(
+                        <ImageIndex 
+                            key={String(index)}
+                            active={true} 
+                        />
+                    ))
+                    
+
+                }
+                
             </ImageIndexes>
             
                 <FlatList 
