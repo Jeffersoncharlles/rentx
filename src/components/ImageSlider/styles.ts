@@ -24,6 +24,8 @@ export const ImageIndex = styled.View<ImageIndexProps>`
 export const CarImageContainer = styled.View`
     width: ${Dimensions.get('window').width}px;
     height: 132px;
+
+    
     justify-content: center;
     align-items: center;
 `;

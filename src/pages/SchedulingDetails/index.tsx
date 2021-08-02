@@ -54,6 +54,7 @@ interface Params {
 
 
 export const SchedulingDetails = () => {
+    const [loading, setLoading] = useState(true);
     const [rentalPeriod, setRentalPeriod] = useState<RentalPeriod>({} as RentalPeriod);
     const theme = useTheme();
     const navigation = useNavigation();
@@ -86,7 +87,7 @@ export const SchedulingDetails = () => {
             unavailable_dates
         })
         .then(() => navigation.navigate('SchedulingComplete'))
-        .catch(()=> Alert.alert("Não foi possível confirmar o agendamento."));
+        .catch(()=> { Alert.alert("Não foi possível confirmar o agendamento."); setLoading(true);});
 
         
     }
@@ -178,6 +179,8 @@ export const SchedulingDetails = () => {
                     title="Alugar agora"  
                     color={theme.colors.success} 
                     onPress={handleSchedulingCompleteRoutes}
+                    loading={!loading}
+                    enabled={loading}
                 />
             </Footer>
          </Container>
