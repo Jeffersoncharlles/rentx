@@ -2,6 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 
+import { Splash } from '../pages/Splash';
 import { Home } from '../pages/Home';
 import { CarDetails } from '../pages/CarDetails';
 import { SchedulingDetails } from '../pages/SchedulingDetails';
@@ -17,7 +18,13 @@ export const StackRoutes = () => {
     return (
         <Navigator 
             headerMode="none"
+            initialRouteName="Splash"
         >
+            <Screen 
+                name="Splash"
+                component={Splash}
+            
+            />
             <Screen 
                 name="Home"
                 component={Home}
