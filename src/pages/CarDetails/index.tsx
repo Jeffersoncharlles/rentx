@@ -3,8 +3,14 @@ import {BackButton} from '../../components/BackButton';
 import {ImageSlider} from '../../components/ImageSlider';
 import {Accessory} from '../../components/Accessory';
 import {Button} from '../../components/Button';
-
-import Animated from 'react-native-reanimated';
+import { StatusBar } from 'react-native';
+import Animated ,{
+    useSharedValue,
+    useAnimatedScrollHandler,
+    useAnimatedStyle,
+    interpolate,
+    Extrapolate
+} from 'react-native-reanimated';
 
 import {getAccessoriesIcon} from '../../utils/getAccessoriesIcon';
 
@@ -29,11 +35,13 @@ import {
 import { useNavigation, useRoute } from '@react-navigation/native';
 import CarDtos from '../../dtos/CarDTO';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+
 interface Params {
     car: CarDtos;
 }
 
 export const CarDetails = () => {
+    const scrollY = useSharedValue(0);
     const navigation = useNavigation();
     const route = useRoute();
     const  { car } = route.params as Params;
@@ -46,23 +54,49 @@ export const CarDetails = () => {
         navigation.goBack();
     }
 
+    const scrollHandler = useAnimatedScrollHandler(e =>{
+        scrollY.value = e.contentOffset.y;
+        //gera o numero da posição do scroll
+    });
+
+    const headerStyleAnimation = useAnimatedStyle(()=>{
+        return{
+            height: interpolate(scrollY.value,
+                [0,200],
+                [200,70],
+                Extrapolate.CLAMP
+                ),
+        }
+    });
+
     return (
         <Container>
-            <Header>
-                <BackButton onPress={handleBack}/>
-            </Header>
-            <CarImages>
-                <ImageSlider 
-                    imagesUrl={car.photos} 
-                />
-            </CarImages>
+            <StatusBar 
+                barStyle="dark-content"
+                translucent
+                backgroundColor="transparent"
+            />
+            <Animated.View
+            style={[headerStyleAnimation]}
+            >
+                <Header>
+                    <BackButton onPress={handleBack}/>
+                </Header>
+
+                <CarImages>
+                    <ImageSlider 
+                        imagesUrl={car.photos} 
+                    />
+                </CarImages>
+            </Animated.View>
+
             <Animated.ScrollView 
            contentContainerStyle={{
                paddingHorizontal:24,
                paddingTop: getStatusBarHeight(),
            }}
             showsVerticalScrollIndicator={false}
-            
+            onScroll={scrollHandler}
             >
                 <Details>
                     <Description>
@@ -90,6 +124,9 @@ export const CarDetails = () => {
                     
                 </Accessories>
                 <About>
+                    {car.about}
+                    {car.about}
+                    {car.about}
                     {car.about}
                 </About>
             </Animated.ScrollView>
