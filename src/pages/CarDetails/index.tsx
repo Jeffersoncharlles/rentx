@@ -4,6 +4,8 @@ import {ImageSlider} from '../../components/ImageSlider';
 import {Accessory} from '../../components/Accessory';
 import {Button} from '../../components/Button';
 
+import Animated from 'react-native-reanimated';
+
 import {getAccessoriesIcon} from '../../utils/getAccessoriesIcon';
 
 import {
@@ -26,6 +28,7 @@ import {
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 import CarDtos from '../../dtos/CarDTO';
+import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 interface Params {
     car: CarDtos;
 }
@@ -53,7 +56,14 @@ export const CarDetails = () => {
                     imagesUrl={car.photos} 
                 />
             </CarImages>
-            <Content >
+            <Animated.ScrollView 
+           contentContainerStyle={{
+               paddingHorizontal:24,
+               paddingTop: getStatusBarHeight(),
+           }}
+            showsVerticalScrollIndicator={false}
+            
+            >
                 <Details>
                     <Description>
                         <Brand>{car.brand}</Brand>
@@ -82,7 +92,7 @@ export const CarDetails = () => {
                 <About>
                     {car.about}
                 </About>
-            </Content>
+            </Animated.ScrollView>
             <Footer>
                 <Button title="Escolher período do aluguel"  color=""  onPress={handleSchedulingRoutes} />
             </Footer>
