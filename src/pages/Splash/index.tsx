@@ -9,7 +9,6 @@ import Animated, {
     withTiming, 
     Easing,
     interpolate,
-
 } from 'react-native-reanimated';
 
 import {
@@ -21,13 +20,19 @@ export const Splash = () => {
 
     const brandStyle = useAnimatedStyle(()=>{
         return  {
-            opacity: splashAnimation.value
+            opacity: interpolate(splashAnimation.value,
+                [0,25,50],
+                [1,.3,0]
+            )
         }
     });
 
     const logoStyle = useAnimatedStyle(()=>{
         return {
-            opacity: splashAnimation.value
+            opacity: interpolate(splashAnimation.value,
+                [0,25,50],
+                [0,.3,1]
+            )
         }
     });
 
