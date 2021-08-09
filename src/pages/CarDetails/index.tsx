@@ -65,7 +65,15 @@ export const CarDetails = () => {
                 [0,200],
                 [200,70],
                 Extrapolate.CLAMP
+                //diminuindo altura e usando o interpolate para diminuir gradativamente de 200 a 70
                 ),
+        }
+    });
+
+    const sliderCarsStyleAnimation= useAnimatedStyle(()=>{
+        return{
+            opacity: interpolate(scrollY.value, [0,150],[1,0], Extrapolate.CLAMP),
+            //animação para sumir o carro aos poucos
         }
     });
 
@@ -83,11 +91,15 @@ export const CarDetails = () => {
                     <BackButton onPress={handleBack}/>
                 </Header>
 
-                <CarImages>
-                    <ImageSlider 
-                        imagesUrl={car.photos} 
-                    />
-                </CarImages>
+                    <Animated.View 
+                        style={sliderCarsStyleAnimation}
+                    >
+                    <CarImages>
+                        <ImageSlider 
+                            imagesUrl={car.photos} 
+                        />
+                    </CarImages>
+                </Animated.View>
             </Animated.View>
 
             <Animated.ScrollView 
@@ -97,6 +109,9 @@ export const CarDetails = () => {
            }}
             showsVerticalScrollIndicator={false}
             onScroll={scrollHandler}
+            scrollEventThrottle={16}
+            //scrollEventThrottle render por quadro
+            //16 da 60fps 
             >
                 <Details>
                     <Description>
