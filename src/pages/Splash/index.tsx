@@ -3,20 +3,24 @@ import React , {useEffect} from 'react';
 import BrandSvg from '../../assets/brand.svg';
 import LogoSvg from '../../assets/logo.svg';
 
+import { useNavigation} from '@react-navigation/core';
+
 import Animated, {
     useSharedValue, 
     useAnimatedStyle,
-    withTiming, 
-    Easing,
+    withTiming,
     interpolate,
     Extrapolate,
+    runOnJS
 } from 'react-native-reanimated';
 
 import {
     Container,
 } from './styles';
 
+
 export const Splash = () => {
+    const navigation = useNavigation();
     const splashAnimation = useSharedValue(0);
 
     const brandStyle = useAnimatedStyle(()=>{
@@ -53,10 +57,21 @@ export const Splash = () => {
      //e animateStyle e basicamente um objeto de estilo igual stylesheet
      //eixo x lados eixo y cima baixo
 
+     const startApp = ()=>{
+        navigation.navigate('Home');
+     }
+
      useEffect(()=>{
         splashAnimation.value = withTiming(
             50,
-            {duration: 1000}
+            {duration: 1000},
+            ()=>{
+                'worklet'
+                runOnJS(startApp)();
+            }
+            //a palavra worklet e para redirecionar o tread
+            // e tem que importar o runOnJs e colocar a função 
+            //dentro para executar e para executar em seguida colocar o ()
         )
      },[]);
 
