@@ -26,8 +26,8 @@ import {
 import { Car } from '../../components/Car';
 
 interface CarProps {
-    id: string;
-    user_id:string;
+    id: number;
+    user_id:number;
     car: CarDTO;
     startDate: string;
     endDate: string;
@@ -40,7 +40,7 @@ export const MyCars = () => {
     const [cars, setCars] = useState<CarProps[]>([]);
     const [loading, setLoading] = useState(true);
 
-    const userId = '1';
+    const userId = 8;
     const theme = useTheme();
 
 
@@ -94,7 +94,7 @@ export const MyCars = () => {
                     </AppoIntments>
                     <FlatList 
                         data={cars}
-                        keyExtractor={item =>item.id}
+                        keyExtractor={item =>item.id.toString()}
                         showsHorizontalScrollIndicator={false}
                         renderItem={({item})=>(
                             <CarWapper>

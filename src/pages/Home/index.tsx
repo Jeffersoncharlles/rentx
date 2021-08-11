@@ -9,6 +9,14 @@ import CarDTO from '../../dtos/CarDTO';
 
 import { Ionicons } from '@expo/vector-icons';
 
+import {RectButton} from 'react-native-gesture-handler';
+
+import Animated ,{
+    useSharedValue,
+    useAnimatedStyle
+} from 'react-native-reanimated';
+const  ButtonAnimated = Animated.createAnimatedComponent(RectButton);
+
 
 import Logo from '../../assets/logo.svg';
 
@@ -30,6 +38,17 @@ export const Home = () => {
     const [loading,setLoading] = useState(true);
     const navigation = useNavigation();
     const theme = useTheme();
+
+    const positionY = useSharedValue(0);
+    const positionX = useSharedValue(0);
+    const myCarsButtonStyle = useAnimatedStyle(()=>{
+        return{
+            transform: [
+                {translateX: positionX.value},
+                {translateY: positionY.value},
+            ]
+        }
+    });
 
     const handleCarDetailsRoutes = (car : CarDTO)=>{
         navigation.navigate('CarDetails', {car});
@@ -84,15 +103,26 @@ export const Home = () => {
                     }
                 />
             }
-
-            <MyCarsButton onPress={handleMyCarsOpen}>
-                <Ionicons 
-                    name="ios-car-sport"
-                    size={32}
-                    color={theme.colors.line}
-                />
-            </MyCarsButton>
             
+            <Animated.View 
+                style={[
+                    myCarsButtonStyle,
+                    {
+                        position: 'absolute',
+                        bottom: 13,
+                        right: 22
+                    }
+                ]}
+            
+            >
+                <ButtonAnimated onPress={handleMyCarsOpen}>
+                    <Ionicons 
+                        name="ios-car-sport"
+                        size={32}
+                        color={theme.colors.line}
+                    />
+                </ButtonAnimated>
+            </Animated.View>
          </Container>
     );
 }

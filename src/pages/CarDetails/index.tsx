@@ -3,7 +3,7 @@ import {BackButton} from '../../components/BackButton';
 import {ImageSlider} from '../../components/ImageSlider';
 import {Accessory} from '../../components/Accessory';
 import {Button} from '../../components/Button';
-import { StatusBar } from 'react-native';
+import { StatusBar, StyleSheet } from 'react-native';
 import Animated ,{
     useSharedValue,
     useAnimatedScrollHandler,
@@ -140,9 +140,6 @@ export const CarDetails = () => {
                 </Accessories>
                 <About>
                     {car.about}
-                    {car.about}
-                    {car.about}
-                    {car.about}
                 </About>
             </Animated.ScrollView>
             <Footer>
@@ -151,3 +148,7 @@ export const CarDetails = () => {
          </Container>
     );
 }
+
+// const styles = StyleSheet.create({
+
+// })
