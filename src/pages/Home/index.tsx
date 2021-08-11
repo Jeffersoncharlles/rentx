@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {StatusBar} from 'react-native';
+import {StatusBar , StyleSheet} from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components';
 import { api } from '../../services/api';
@@ -115,7 +115,11 @@ export const Home = () => {
                 ]}
             
             >
-                <ButtonAnimated onPress={handleMyCarsOpen}>
+                <ButtonAnimated 
+                    onPress={handleMyCarsOpen}
+                    style={[styles.button, {backgroundColor:theme.colors.main}]}
+                
+                >
                     <Ionicons 
                         name="ios-car-sport"
                         size={32}
@@ -126,3 +130,13 @@ export const Home = () => {
          </Container>
     );
 }
+
+const styles = StyleSheet.create({
+    button: {
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
+})
