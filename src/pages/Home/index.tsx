@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {StatusBar , StyleSheet} from 'react-native';
+import {StatusBar , StyleSheet, BackHandler} from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components';
 import { api } from '../../services/api';
@@ -91,6 +91,13 @@ export const Home = () => {
         fetchCar();
     },[]);
 
+    useEffect(()=>{
+        BackHandler.addEventListener('hardwareBackPress', ()=>{
+            return true;
+        });
+        //prevendo voltar splash
+    },[]);
+
     return (
         <Container>
             <StatusBar 
@@ -104,9 +111,12 @@ export const Home = () => {
                             width={RFValue(108)}
                             height={RFValue(12)}
                     />
-                    <TotalCars>
-                        Total de {cars.length} carros
-                    </TotalCars>
+                    { !loading &&
+                        <TotalCars>
+                            Total de {cars.length} carros
+                        </TotalCars>
+                        //se o loading for falso ai pode mostrar
+                    }
                 </HeaderContent>
             </Header>
             
