@@ -24,7 +24,7 @@ import {
     CarFooterDate,
 } from './styles';
 import { Car } from '../../components/Car';
-
+import { LoadAnimation } from '../../components/LoadAnimation';
 interface CarProps {
     id: number;
     user_id:number;
@@ -86,7 +86,7 @@ export const MyCars = () => {
                 </SubTitle>
                 
             </Header>
-            {loading ? <Load /> :
+            {loading ? <LoadAnimation /> :
                 <Content>
                     <AppoIntments>
                         <AppoIsmenesTitle>Agendamentos Feitos</AppoIsmenesTitle>

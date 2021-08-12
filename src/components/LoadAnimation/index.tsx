@@ -14,6 +14,10 @@ export const LoadAnimation = () => {
         <Container>
             <LottieView 
                 source={loadAnimated}
+                style={{height:200}}
+                resizeMode="contain"
+                autoPlay
+                loop
             />
         </Container>
     );
