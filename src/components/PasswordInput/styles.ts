@@ -1,10 +1,11 @@
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 import {TextInput} from 'react-native'
+import { BorderlessButton } from 'react-native-gesture-handler';
 
 export const Container = styled.View`
     flex-direction: row;
-    margin-bottom: 8px;
+    
 `;
 
 export const IconContainer = styled.View`
@@ -14,6 +15,9 @@ export const IconContainer = styled.View`
     align-items: center;
     background-color: ${({theme})=>theme.colors.background_secondary};
     margin-right: 2px;
+`;
+export const ChangePassVisibilityButton = styled(BorderlessButton)`
+
 `;
 export const InputText = styled(TextInput)`
     flex: 1;
