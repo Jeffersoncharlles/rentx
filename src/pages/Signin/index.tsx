@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { 
     StatusBar,
     KeyboardAvoidingView,
@@ -20,7 +20,8 @@ import {
 } from './styles';
 
 export const Signin = () => {
-    
+    const [email, setEmail]= useState('');
+    const [password, setPassword]= useState('');
 
     return(
         //</KeyboardAvoidingView> server para arrumar o teclado e ele ja contem flex 1
@@ -54,12 +55,17 @@ export const Signin = () => {
                             keyboardType="email-address"
                             autoCorrect={false}
                             autoCapitalize="none"
+                            onChangeText={setEmail}
+                            value={email.trim()}
+                            //.trim e por mim
                         />
                         <PasswordInput 
                             iconName="lock"
                             placeholder="Senha"
                             autoCorrect={false}
                             autoCapitalize="none"
+                            onChangeText={setPassword}
+                            value={password}
                         />
                         
                     </Main>

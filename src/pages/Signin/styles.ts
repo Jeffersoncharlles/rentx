@@ -2,6 +2,7 @@ import styled from 'styled-components/native';
 import theme from '../../styles/theme';
 import {getStatusBarHeight} from 'react-native-iphone-x-helper';
 import { RFValue } from 'react-native-responsive-fontsize';
+import {SafeAreaView} from 'react-native';
 
 export const Container = styled.View`
     padding: 0 24px;
