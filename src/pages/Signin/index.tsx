@@ -1,6 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
 import { Button } from '../../components/Button';
+import { Input } from '../../components/Input';
 import theme from '../../styles/theme';
 
 import {
@@ -9,7 +10,7 @@ import {
     Title,
     SubTitle,
     Footer,
-
+    Main,
 } from './styles';
 
 export const Signin = () => {
@@ -32,6 +33,14 @@ export const Signin = () => {
                 uma experiência incrível.
                 </SubTitle>
             </Header>
+
+            <Main>
+                <Input 
+                    iconName="mail"
+                    placeholder="E-mail"
+                />
+                
+            </Main>
 
             <Footer>
                 <Button 

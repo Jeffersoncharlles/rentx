@@ -18,6 +18,10 @@ export const Footer = styled.View`
     
 
 `;
+export const Main = styled.View`
+    width: 100%;
+    margin:64px 0;//emcima em embaixo 64 e 0 para os lados
+`;
 
 export const Title = styled.Text`
     font-family: ${({theme})=>theme.fonts.secondary_600} ;
