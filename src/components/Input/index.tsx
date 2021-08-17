@@ -15,11 +15,11 @@ interface Props extends TextInputProps{
     iconName:React.ComponentProps<typeof Feather>['name']
 }
 
-export const Input = ({iconName, } :Props) => {
+export const Input = ({iconName, ...rest} :Props) => {
     const theme = useTheme();
 
     return(
-        <Container>
+        <Container >
             <IconContainer>
             <Feather 
                 name={iconName}
@@ -29,7 +29,7 @@ export const Input = ({iconName, } :Props) => {
             </IconContainer>
             
 
-            <InputText />
+            <InputText {...rest}/>
 
         </Container>
     );

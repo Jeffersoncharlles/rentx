@@ -38,6 +38,16 @@ export const Signin = () => {
                 <Input 
                     iconName="mail"
                     placeholder="E-mail"
+                    keyboardType="email-address"
+                    autoCorrect={false}
+                    autoCapitalize="none"
+                />
+                <Input 
+                    iconName="mail"
+                    placeholder="Senha"
+                    keyboardType="email-address"
+                    autoCorrect={false}
+                    autoCapitalize="none"
                 />
                 
             </Main>
