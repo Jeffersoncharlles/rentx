@@ -10,5 +10,5 @@ export const Container = styled.View<Props>`
     margin-left: 8px;
     border-radius: 3px;
 
-    background-color: ${({theme, active})=> active ? theme.colors.title : theme.colors.background_secondary};
+    background-color: ${({theme, active})=> active ? theme.colors.title : theme.colors.text_details};
 `;

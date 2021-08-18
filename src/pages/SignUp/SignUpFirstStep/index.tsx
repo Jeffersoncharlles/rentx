@@ -7,6 +7,11 @@ import {
     Container,
     Header,
     Steps,
+    Title,
+    SubTitle,
+    Form,
+    FormTitle,
+    
 } from './styles';
 
 export const SignUpFirstStep = () => {
@@ -26,6 +31,20 @@ export const SignUpFirstStep = () => {
                     <Bullet />
                 </Steps>
             </Header>
+            <Title>
+                Crie Sua {'\n'}conta
+            </Title>
+            <SubTitle>
+                Faça seu cadastro de {'\n'}
+                forma rápida e fácil
+            </SubTitle>
+
+            <Form>
+                <FormTitle>
+                    1. Dados
+                </FormTitle>
+
+            </Form>
 
         </Container>
     );
