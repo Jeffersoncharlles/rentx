@@ -38,8 +38,8 @@ export const PasswordInput = ({iconName, value,...rest} :Props) => {
     }
 
     return(
-        <Container isFocused={isFocused}>
-            <IconContainer>
+        <Container >
+            <IconContainer isFocused={isFocused}>
             <Feather 
                 name={iconName}
                 size={24}
@@ -53,11 +53,12 @@ export const PasswordInput = ({iconName, value,...rest} :Props) => {
                 //so aparece a senha se tiver false isPassVisible
                 onFocus={handleInputFocus}
                 onBlur={handleInputBlur}
+                isFocused={isFocused}
                 {...rest}
             />
 
             <ChangePassVisibilityButton onPress={handlePassVisibilityChange}>
-                <IconContainer>
+                <IconContainer isFocused={isFocused}>
                     <Feather 
                         name={isPassVisible ? 'eye': 'eye-off'}
                         size={24}

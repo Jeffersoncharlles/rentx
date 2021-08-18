@@ -27,16 +27,17 @@ export const Input = ({iconName,value, ...rest} :Props) => {
     const handleInputBlur =()=>{
         setIsFocused(false);
         SetIsFilled(!!value);
-        //!! se tem conteudo e verdadeiro se nao e falso
+        //!! se tem conteúdo e verdadeiro se nao e falso
     }
 
     return(
-        <Container isFocused={isFocused}>
-            <IconContainer>
+        <Container >
+            <IconContainer isFocused={isFocused}>
             <Feather 
                 name={iconName}
                 size={24}
                 color={(isFocused || isFilled) ? theme.colors.main : theme.colors.text_details}
+                
                 // || ou
             />
             </IconContainer>
@@ -45,6 +46,7 @@ export const Input = ({iconName,value, ...rest} :Props) => {
             <InputText 
                 onFocus={handleInputFocus}
                 onBlur={handleInputBlur}
+                isFocused={isFocused}
                 {...rest}
             />
 
