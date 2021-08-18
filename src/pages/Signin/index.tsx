@@ -3,12 +3,14 @@ import {
     StatusBar,
     KeyboardAvoidingView,
     TouchableWithoutFeedback,
-    Keyboard
+    Keyboard,
+    Alert
  } from 'react-native';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
 import { PasswordInput } from '../../components/PasswordInput';
 import theme from '../../styles/theme';
+import * as Yup from 'yup';
 
 import {
     Container,
@@ -22,6 +24,36 @@ import {
 export const Signin = () => {
     const [email, setEmail]= useState('');
     const [password, setPassword]= useState('');
+
+
+    const handleSignIn = async ()=>{
+        /* nao esquecer Yup e para validar*/
+
+        try {
+            //colocar dentro do try catch pq se nao passar
+            //ele dispara
+            const schema = Yup.object().shape({
+                email:Yup.string()
+                   .required('E-mail obrigatório')
+                   .email('Digite um e-mail válido'),
+                password:Yup.string()
+                   .required('A senha é obrigatória')
+            })
+   
+            await schema.validate({email,password})
+        } catch (error) {
+            //ver se o erro e uma instancia do Yup
+            if (error instanceof Yup.ValidationError) {
+                
+            } else {
+                Alert.alert(
+                    'Erro na autenticação',
+                    'Ocorreu um erro ao fazer login'
+                );
+            }
+        }
+         
+    }
 
     return(
         //</KeyboardAvoidingView> server para arrumar o teclado e ele ja contem flex 1
@@ -73,8 +105,8 @@ export const Signin = () => {
                     <Footer>
                         <Button 
                             title="Login"
-                            onPress={()=>{}}
-                            enabled={false}
+                            onPress={handleSignIn}
+                            enabled={true}
                             loading={false}
                         />
                         <Button 
