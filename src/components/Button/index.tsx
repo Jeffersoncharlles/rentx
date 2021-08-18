@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTheme } from 'styled-components';
 import { ActivityIndicator} from 'react-native';
+import { RectButtonProps } from 'react-native-gesture-handler';
 
 import {
     Container,
@@ -8,14 +9,15 @@ import {
 } from './styles';
 import theme from '../../styles/theme';
 
-interface Props{
+interface Props extends RectButtonProps{
     title: string;
     color?: string;
-    onPress: ()=> void;
-    enabled?: boolean;
+    // onPress: ()=> void;
+    // enabled?: boolean;
     loading?: boolean;
     light?:boolean;
 }
+//onPress e enabled sao propriedades de um botão e entendendo props nao precisa deles na interface
 
 export const Button = ({title, color, enabled = true, loading ,light = false,onPress}: Props) => {
     const themes = useTheme();
