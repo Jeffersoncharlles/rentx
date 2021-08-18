@@ -4,7 +4,8 @@ import {
     KeyboardAvoidingView,
     TouchableWithoutFeedback,
     Keyboard,
-    Alert
+    Alert,
+    SafeAreaView
  } from 'react-native';
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
@@ -20,11 +21,18 @@ import {
     Footer,
     Main,
 } from './styles';
+import { useNavigation } from '@react-navigation/native';
 
 export const Signin = () => {
     const [email, setEmail]= useState('');
     const [password, setPassword]= useState('');
+    const navigation = useNavigation();
 
+
+    const handleNewAccount = ()=>{
+        navigation.navigate('SignUpFirstStep');
+
+    }
 
     const handleSignIn = async ()=>{
         /* nao esquecer Yup e para validar*/
@@ -40,7 +48,9 @@ export const Signin = () => {
                    .required('A senha é obrigatória')
             })
    
-            await schema.validate({email,password})
+            await schema.validate({email,password});
+
+            //fazer login
         } catch (error) {
             //ver se o erro e uma instancia do Yup
             if (error instanceof Yup.ValidationError) {
@@ -60,6 +70,7 @@ export const Signin = () => {
         //TouchableWithoutFeedback server para capturar o toque sem mostrar nada
         //Keyboard server para capturar o teclado
         //Keyboard.dismiss ao clicar no TouchableWithoutFeedback ele vai fechar o teclado 
+        <SafeAreaView >
         <KeyboardAvoidingView behavior="position" enabled>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <Container>
@@ -111,7 +122,7 @@ export const Signin = () => {
                         />
                         <Button 
                             title="Criar conta gratuita"
-                            onPress={()=>{}}
+                            onPress={handleNewAccount}
                             enabled={true}
                             loading={false}
                             color={theme.colors.background_secondary}
@@ -123,5 +134,6 @@ export const Signin = () => {
                 </Container>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
+        </SafeAreaView>
     );
 }
