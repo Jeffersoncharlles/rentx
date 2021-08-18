@@ -70,7 +70,6 @@ export const Signin = () => {
         //TouchableWithoutFeedback server para capturar o toque sem mostrar nada
         //Keyboard server para capturar o teclado
         //Keyboard.dismiss ao clicar no TouchableWithoutFeedback ele vai fechar o teclado 
-        <SafeAreaView >
         <KeyboardAvoidingView behavior="position" enabled>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <Container>
@@ -134,6 +133,5 @@ export const Signin = () => {
                 </Container>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
-        </SafeAreaView>
     );
 }
