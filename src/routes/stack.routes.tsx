@@ -24,6 +24,11 @@ export const StackRoutes = () => {
             headerMode="none"
             initialRouteName="Signin"
         >
+            {/* <Screen 
+                name="Splash"
+                component={Splash}
+            
+            /> */}
             <Screen 
                 name="Signin"
                 component={Signin}
@@ -39,11 +44,7 @@ export const StackRoutes = () => {
                 component={SignUpSecondStep}
             
             />
-            {/* <Screen 
-                name="Splash"
-                component={Splash}
             
-            /> */}
             <Screen 
                 name="Home"
                 component={Home}

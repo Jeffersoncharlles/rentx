@@ -4,7 +4,7 @@ import { BackButton } from '../../../components/BackButton';
 import { Bullet } from '../../../components/Bullet';
 import { PasswordInput } from '../../../components/PasswordInput';
 import { Button } from '../../../components/Button';
-import { Confirmation } from '../../Confirmation';
+import { api } from '../../../services/api';
 import { useTheme } from 'styled-components';
 import {
     KeyboardAvoidingView,
@@ -49,7 +49,7 @@ export const SignUpSecondStep = () => {
   //jogo o objeto user dentro do objeto
   const {user} = route.params as Params;
 
-  const handleRegister = ()=>{
+  const handleRegister = async ()=>{
       if (!password || !passwordConfirm) {
           return Alert.alert('Informe a senha e a confirmação');
       }
@@ -58,14 +58,26 @@ export const SignUpSecondStep = () => {
       }
 
       //Enviar para api e cadastrar 
+      await api.post('/users',{
+          name:user.name,
+          email:user.email,
+          driver_license: user.driverLicense,
+          password,
+      })
+      .then(()=>{
+         //chamar a tela de cadastrado
+        navigation.navigate('Confirmation',{
+            title: 'Conta Criada!', 
+            message:`Agora é só fazer login\n e aproveitar`,
+            nextScreenRoute:'Signin',
+        });
+
+      }).catch(()=>{
+        Alert.alert('Opa', 'não foi possível cadastrar');
+      });
       
 
-      //chamar a tela de cadastrado
-      navigation.navigate('Confirmation',{
-        title: 'Conta Criada!', 
-        message:`Agora é só fazer login\n e aproveitar`,
-        nextScreenRoute:'Signin',
-      });
+     
   }
 
 
