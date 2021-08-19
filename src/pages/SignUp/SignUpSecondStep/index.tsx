@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import React from 'react';
 import { BackButton } from '../../../components/BackButton';
 import { Bullet } from '../../../components/Bullet';
@@ -21,12 +21,42 @@ import {
     FormTitle,
 
 } from './styles';
+import { useState } from 'react';
+import { Alert } from 'react-native';
+
+interface Params {
+    user:{
+       name: string;
+       email: string;
+       driverLicense: string; 
+    }
+}
+
 
 export const SignUpSecondStep = () => {
+    const [password, setPassword] = useState('');
+    const [passwordConfirm, setPasswordConfirm] = useState('');
 
     const theme = useTheme();
 
   const navigation =  useNavigation();
+
+
+  const route = useRoute();
+  //cria interface com os parâmetros 
+  //pegar o routes e puxa os params para aqui
+  //jogo o objeto user dentro do objeto
+  const {user} = route.params as Params;
+
+  const handleRegister = ()=>{
+      if (!password || !passwordConfirm) {
+          return Alert.alert('Informe a senha e a confirmação');
+      }
+      if (password != passwordConfirm) {
+        return Alert.alert('As senhas não são iguais');
+      }
+  }
+
 
   const handleBackButton = ()=>{
       navigation.goBack();
@@ -62,15 +92,20 @@ export const SignUpSecondStep = () => {
                         <PasswordInput 
                             iconName="lock"
                             placeholder="Senha"
+                            onChangeText={setPassword}
+                            value={password}
                         />
                         <PasswordInput 
                             iconName="lock"
                             placeholder="Repetir Senha"
+                            onChangeText={setPasswordConfirm}
+                            value={passwordConfirm}
                         />
                     </Form>
                     <Button 
                         title="Próximo"
                         color={theme.colors.success}
+                        onPress={handleRegister}
                     />
 
                 </Container>

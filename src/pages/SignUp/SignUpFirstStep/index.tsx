@@ -7,7 +7,8 @@ import { Button } from '../../../components/Button';
 import {
     KeyboardAvoidingView,
     TouchableWithoutFeedback,
-    Keyboard
+    Keyboard,
+    Alert
 } from 'react-native';
 
 import {
@@ -20,16 +21,49 @@ import {
     FormTitle,
 
 } from './styles';
+import { useState } from 'react';
+import * as Yup from 'yup';
 
 export const SignUpFirstStep = () => {
+    const [name,setName] = useState('');
+    const [email,setEmail] = useState('');
+    const [driverLicense,setDriverLicense] = useState('');
 
   const navigation =  useNavigation();
 
   const handleBackButton = ()=>{
       navigation.goBack();
   }
-  const handleNextButton = ()=>{
-      navigation.navigate('SignUpSecondStep');
+  const handleNextButton = async ()=>{
+      try {
+
+        //aqui eu crio o esquema de como quero a validação em objeto
+        const schema = Yup.object().shape({
+            driverLicense: Yup.string()
+                .required('CNH é obrigatório')
+                .min(11),
+            email: Yup.string()
+                .email('E-mail inválido')
+                .required('E-mail é obrigatório'),
+            name: Yup.string()
+                .required('Nome é obrigatório'),
+        });
+
+        //aqui eu crio o objeto com os valores
+        const data = {name , email, driverLicense};
+
+        //aqui eu passo o esquema para validar com os objetos data
+        await schema.validate(data);
+
+        navigation.navigate('SignUpSecondStep',{user: data});
+      } catch (error) {
+          if (error instanceof Yup.ValidationError) {
+              Alert.alert('Opa', error.message);
+          } else {
+              
+          }
+      }
+      
   }
 
     return(
@@ -62,16 +96,23 @@ export const SignUpFirstStep = () => {
                         <Input 
                             iconName="user"
                             placeholder="Nome"
+                            onChangeText={setName}
+                            value={name}
                         />
                         <Input 
                             iconName="mail"
                             placeholder="E-mail"
                             keyboardType="email-address"
+                            onChangeText={setEmail}
+                            value={email}
                         />
                         <Input 
                             iconName="credit-card"
                             placeholder="CNH"
                             keyboardType="numeric"
+                            //onChangeText={(value)=> setDriverLicense(Number(value))}
+                            onChangeText={setDriverLicense}
+                            value={driverLicense}
                         />
 
                     </Form>
