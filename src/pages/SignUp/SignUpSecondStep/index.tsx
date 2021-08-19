@@ -4,6 +4,7 @@ import { BackButton } from '../../../components/BackButton';
 import { Bullet } from '../../../components/Bullet';
 import { PasswordInput } from '../../../components/PasswordInput';
 import { Button } from '../../../components/Button';
+import { Confirmation } from '../../Confirmation';
 import { useTheme } from 'styled-components';
 import {
     KeyboardAvoidingView,
@@ -55,6 +56,16 @@ export const SignUpSecondStep = () => {
       if (password != passwordConfirm) {
         return Alert.alert('As senhas não são iguais');
       }
+
+      //Enviar para api e cadastrar 
+      
+
+      //chamar a tela de cadastrado
+      navigation.navigate('Confirmation',{
+        title: 'Conta Criada!', 
+        message:`Agora é só fazer login\n e aproveitar`,
+        nextScreenRoute:'Signin',
+      });
   }
 
 

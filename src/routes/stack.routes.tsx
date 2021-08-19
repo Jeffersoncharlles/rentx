@@ -10,7 +10,7 @@ import { Home } from '../pages/Home';
 import { CarDetails } from '../pages/CarDetails';
 import { SchedulingDetails } from '../pages/SchedulingDetails';
 import { Scheduling } from '../pages/Scheduling';
-import { SchedulingComplete } from '../pages/SchedulingComplete';
+import { Confirmation } from '../pages/Confirmation';
 import { MyCars } from '../pages/MyCars';
 
 
@@ -68,8 +68,8 @@ export const StackRoutes = () => {
             
             />
             <Screen 
-                name="SchedulingComplete"
-                component={SchedulingComplete}
+                name="Confirmation"
+                component={Confirmation}
             
             />
             <Screen 

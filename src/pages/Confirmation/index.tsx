@@ -13,15 +13,23 @@ import {
     Message,
     Footer,
 } from './styles';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation,useRoute } from '@react-navigation/native';
 
-export const SchedulingComplete = () => {
+interface Params {
+    title:string;
+    message: string;
+    nextScreenRoute: string;
+}
+
+export const Confirmation = () => {
     const { width } = useWindowDimensions();
     const navigation = useNavigation();
 
+    const route = useRoute();
+    const {title, message,nextScreenRoute} = route.params as Params;
 
     const handleOKCompleteRoutes = () =>{
-        navigation.navigate('Home');
+        navigation.navigate(nextScreenRoute);
     }
 
     return (
@@ -42,13 +50,12 @@ export const SchedulingComplete = () => {
                     height={80}
                 />
                 <Title>
-                    Carro alugado!
+                    {title}
                 </Title>
 
                 <Message>
-                Agora você só precisa ir {'\n'}
-                até a concessionária da RENTX{'\n'}
-                pegar o seu automóvel.
+                    {message}
+                
                 </Message>
             </Content>
             <Footer>
