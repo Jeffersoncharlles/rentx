@@ -54,8 +54,15 @@ const AuthProvider = ({children}: AuthProviderProps)=>{
             password
         });
 
-        console.log(response.data);
+        //console.log(response.data);
         //resposta do dados vem em data
+        const {token, user} = response.data;
+
+        //setar no cabeçalho em todas a requisição
+        //inf de authorization em todas requisição Bearer
+        api.defaults.headers.authorization = `Bearer ${token}`;
+
+        setData({token,user});
     }
 
     //authProvider vai prover para todos os filhos 
