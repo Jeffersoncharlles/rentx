@@ -22,11 +22,13 @@ import {
     Main,
 } from './styles';
 import { useNavigation } from '@react-navigation/native';
+import {useAuth} from '../../hooks/auth';
 
 export const Signin = () => {
     const [email, setEmail]= useState('');
     const [password, setPassword]= useState('');
     const navigation = useNavigation();
+    const { signIn } = useAuth();//consigo acessar pq o useAuth para passando ele
 
 
     const handleNewAccount = ()=>{
@@ -51,6 +53,7 @@ export const Signin = () => {
             await schema.validate({email,password});
 
             //fazer login
+            signIn({email,password});
         } catch (error) {
             //ver se o erro e uma instancia do Yup
             if (error instanceof Yup.ValidationError) {
