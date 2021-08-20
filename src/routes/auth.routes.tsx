@@ -22,7 +22,7 @@ export const StackRoutes = () => {
     return (
         <Navigator 
             headerMode="none"
-            initialRouteName="Home"
+            initialRouteName="Signin"
         >
             {/* <Screen 
                 name="Splash"
