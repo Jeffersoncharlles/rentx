@@ -3,7 +3,6 @@ import CarDTO from '../../dtos/CarDTO';
 import { api } from '../../services/api';
 import { StatusBar, FlatList } from 'react-native';
 import {BackButton} from '../../components/BackButton';
-import {Load} from '../../components/Load';
 import { useNavigation,useRoute } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 import {AntDesign} from '@expo/vector-icons';
