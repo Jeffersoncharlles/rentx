@@ -73,9 +73,9 @@ export const Home = () => {
     const handleCarDetailsRoutes = (car : CarDTO)=>{
         navigation.navigate('CarDetails', {car});
     }
-    const handleMyCarsOpen = ()=>{
-        navigation.navigate('MyCars');
-    }
+    // const handleMyCarsOpen = ()=>{
+    //     navigation.navigate('MyCars');
+    // }
 
     useEffect(()=>{
         const fetchCar = async ()=>{
@@ -92,12 +92,12 @@ export const Home = () => {
         fetchCar();
     },[]);
 
-    useEffect(()=>{
-        BackHandler.addEventListener('hardwareBackPress', ()=>{
-            return true;
-        });
-        //prevendo voltar splash
-    },[]);
+    // useEffect(()=>{
+    //     BackHandler.addEventListener('hardwareBackPress', ()=>{
+    //         return true;
+    //     });
+    //     //prevendo voltar splash
+    // },[]);
 
     return (
         <Container>
@@ -133,7 +133,7 @@ export const Home = () => {
                     }
                 />
             }
-            <PanGestureHandler onGestureEvent={onGestureEvent}>
+            {/* <PanGestureHandler onGestureEvent={onGestureEvent}>
                 <Animated.View 
                     style={[
                         myCarsButtonStyle,
@@ -155,17 +155,17 @@ export const Home = () => {
                         />
                     </ButtonAnimated>
                 </Animated.View>
-            </PanGestureHandler>
+            </PanGestureHandler> */}
          </Container>
     );
 }
 
-const styles = StyleSheet.create({
-    button: {
-        width: 60,
-        height: 60,
-        borderRadius: 30,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
-})
+// const styles = StyleSheet.create({
+//     button: {
+//         width: 60,
+//         height: 60,
+//         borderRadius: 30,
+//         justifyContent: 'center',
+//         alignItems: 'center'
+//     }
+// })

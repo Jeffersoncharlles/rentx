@@ -58,7 +58,7 @@ export const Splash = () => {
      //eixo x lados eixo y cima baixo
 
      const startApp = ()=>{
-        navigation.navigate('Home');
+        navigation.navigate('Signin');
      }
 
      useEffect(()=>{
