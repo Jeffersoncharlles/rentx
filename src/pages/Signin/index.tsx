@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import { 
     StatusBar,
     KeyboardAvoidingView,
@@ -23,6 +23,8 @@ import {
 } from './styles';
 import { useNavigation } from '@react-navigation/native';
 import {useAuth} from '../../hooks/auth';
+
+import {database} from '../../database';
 
 export const Signin = () => {
     const [email, setEmail]= useState('');
@@ -67,6 +69,17 @@ export const Signin = () => {
         }
          
     }
+    useEffect(()=>{
+        const loadData = async ()=>{
+            const userCollection = database.get('users');
+
+            const users = await userCollection.query().fetch();
+            console.log("usuarios cadastado na bd");
+            console.log(users);
+        }
+
+        loadData();
+    },[])
 
     return(
         //</KeyboardAvoidingView> server para arrumar o teclado e ele ja contem flex 1
