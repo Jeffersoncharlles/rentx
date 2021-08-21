@@ -12,7 +12,7 @@ export const Routes = () => {
     //verificando se ta logado
     return (
         <NavigationContainer>
-           {user ? <AppTabRoutes /> : <AuthRoutes />}
+           {user.id ? <AppTabRoutes /> : <AuthRoutes />}
          </NavigationContainer>
     );
 }
