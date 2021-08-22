@@ -1,7 +1,10 @@
-import { useNavigation } from '@react-navigation/native';
+
 import React,{useState} from 'react';
+import {KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 import { BackButton } from '../../components/BackButton';
+import { Input } from '../../components/Input';
 import { Feather } from '@expo/vector-icons';
 
 import {
@@ -17,6 +20,7 @@ import {
     Options,
     Option,
     OptionTitle,
+    Section,
 } from './styles';
 
 export const Profile = () => {
@@ -38,55 +42,73 @@ export const Profile = () => {
     }
 
     return(
-        <Container>
-            <Header>
-                <HeadTop>
-                    <BackButton color={theme.colors.shape} onPress={handleBack} />
-                    <HeaderTitle>
-                        Editar Perfil
-                    </HeaderTitle>
-                    <LogoutButton onPress={handleSinOut} >
-                        <Feather 
-                            name="power"
-                            size={24}
-                            color={theme.colors.shape}
+        <KeyboardAvoidingView behavior="position" enabled>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <Container>
+                    <Header>
+                        <HeadTop>
+                            <BackButton color={theme.colors.shape} onPress={handleBack} />
+                            <HeaderTitle>
+                                Editar Perfil
+                            </HeaderTitle>
+                            <LogoutButton onPress={handleSinOut} >
+                                <Feather 
+                                    name="power"
+                                    size={24}
+                                    color={theme.colors.shape}
+                                />
+                            </LogoutButton>
+                        </HeadTop>
+                        <PhotoContainer>
+                            <Photo source={{uri:'https://avatars.githubusercontent.com/u/26746739?v=4'}} />
+                            <PhotoButton onPress={()=>{}} > 
+                                <Feather 
+                                    name="camera"
+                                    size={24}
+                                    color={theme.colors.shape}
+                                />
+                            </PhotoButton>
+                        </PhotoContainer>
+                    </Header>
+
+                    <ContentOptions>
+                        <Options>
+                            <Option 
+                                active={option === 'dataEdit'}
+                                onPress={()=> handleOptionChange('dataEdit')}
+                            >
+                                <OptionTitle active={option === 'dataEdit'}>
+                                    Dados
+                                </OptionTitle>
+                            </Option>
+                            <Option 
+                                active={option === 'passwordEdit'}
+                                onPress={()=> handleOptionChange('passwordEdit')}
+                            >
+                                <OptionTitle active={option === 'passwordEdit'}>
+                                    Trocar Senha
+                                </OptionTitle>
+                            </Option>
+                        </Options>
+                        <Section>
+                        <Input 
+                            iconName="user"
+                            placeholder="nome"
+                            autoCorrect={false}
                         />
-                    </LogoutButton>
-                </HeadTop>
-                <PhotoContainer>
-                    <Photo source={{uri:'https://avatars.githubusercontent.com/u/26746739?v=4'}} />
-                    <PhotoButton onPress={()=>{}} > 
-                        <Feather 
-                            name="camera"
-                            size={24}
-                            color={theme.colors.shape}
+                        <Input 
+                            iconName="mail"
+                            editable={false}
                         />
-                    </PhotoButton>
-                </PhotoContainer>
-            </Header>
-
-            <ContentOptions>
-                <Options>
-                    <Option 
-                        active={option === 'dataEdit'}
-                        onPress={()=> handleOptionChange('dataEdit')}
-                    >
-                        <OptionTitle active={option === 'dataEdit'}>
-                            Dados
-                        </OptionTitle>
-                    </Option>
-                    <Option 
-                        active={option === 'passwordEdit'}
-                        onPress={()=> handleOptionChange('passwordEdit')}
-                    >
-                        <OptionTitle active={option === 'passwordEdit'}>
-                            Trocar Senha
-                        </OptionTitle>
-                    </Option>
-                </Options>
-            </ContentOptions>
-
-
-        </Container>
+                        <Input 
+                            iconName="credit-card"
+                            placeholder="CNH"
+                            keyboardType="numeric"
+                        />
+                    </Section>
+                    </ContentOptions>
+                </Container>
+            </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
     );
 }

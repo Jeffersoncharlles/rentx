@@ -12,7 +12,6 @@ interface OptionProps{
 
 
 export const Container = styled.View`
-    flex: 1;
     background-color: ${({theme})=>theme.colors.background_primary};
 `;
 
@@ -75,7 +74,6 @@ export const Photo = styled.Image`
 `;
 
 export const ContentOptions = styled.View`
-    flex: 1;
     padding: 0 24px;
     margin-top: 112px;
 `;
@@ -115,3 +113,4 @@ export const OptionTitle = styled.Text<OptionProps>`
     };
 `;
 
+export const Section = styled.View``;
