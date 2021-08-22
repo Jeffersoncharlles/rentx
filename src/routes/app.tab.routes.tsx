@@ -9,8 +9,8 @@ import PerfilSvg from '../assets/perfil.svg';
 
 
 import { AppStackRoutes } from './app.stack.routes';
-import { Home } from '../pages/Home';
 import { MyCars } from '../pages/MyCars';
+import { Profile } from '../pages/Profile';
 
 
 
@@ -49,15 +49,6 @@ export const AppTabRoutes = () => {
                 }}
             />
             <Screen 
-                name="Profile"
-                component={Home}
-                options={{
-                    tabBarIcon: ({color})=>(
-                        <PerfilSvg width={24} height={24} fill={color}/>
-                    )
-                }}
-            />
-            <Screen 
                 name="MyCars"
                 component={MyCars}
                 options={{
@@ -66,6 +57,16 @@ export const AppTabRoutes = () => {
                     )
                 }}
             />
+            <Screen 
+                name="Profile"
+                component={Profile}
+                options={{
+                    tabBarIcon: ({color})=>(
+                        <PerfilSvg width={24} height={24} fill={color}/>
+                    )
+                }}
+            />
+
         </Navigator>
     );
 }
