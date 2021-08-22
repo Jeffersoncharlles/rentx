@@ -54,50 +54,55 @@ export const Home = () => {
             ]
         }
     });
-    const onGestureEvent = useAnimatedGestureHandler({
-        //start começou active quando esta segurando e o end quando solto
-        onStart(e,ctx:any){
-            ctx.positionX = positionX.value;
-            ctx.positionY = positionY.value;
-        },
-        onActive(e,ctx:any){
-            positionX.value = ctx.positionX + e.translationX;
-            positionY.value = ctx.positionY + e.translationY;
-        },
-        onEnd(){
-            positionX.value = withSpring(0);
-            positionY.value = withSpring(0);
-        }
-    });
+    // const onGestureEvent = useAnimatedGestureHandler({
+    //     //start começou active quando esta segurando e o end quando solto
+    //     onStart(e,ctx:any){
+    //         ctx.positionX = positionX.value;
+    //         ctx.positionY = positionY.value;
+    //     },
+    //     onActive(e,ctx:any){
+    //         positionX.value = ctx.positionX + e.translationX;
+    //         positionY.value = ctx.positionY + e.translationY;
+    //     },
+    //     onEnd(){
+    //         positionX.value = withSpring(0);
+    //         positionY.value = withSpring(0);
+    //     }
+    // });
 
     const handleCarDetailsRoutes = (car : CarDTO)=>{
         navigation.navigate('CarDetails', {car});
     }
-    // const handleMyCarsOpen = ()=>{
-    //     navigation.navigate('MyCars');
-    // }
 
     useEffect(()=>{
+        //resolvendo problema de memory leak
+        let isMounted = true;
+
+
         const fetchCar = async ()=>{
           try {
             const response = await api.get('/cars');
-            setCars(response.data);
+            if (isMounted) {
+                setCars(response.data);
+            }
+            
           } catch (error) {
               console.log(error);
           }finally{
-              setLoading(false);
+              if (isMounted) {
+                setLoading(false);
+              }
+              
           }
         };
 
         fetchCar();
+        return ()=>{
+            //depois que ele passa por tudo eu seto para falso
+            // ele so seta o set car se for verdadeira
+            isMounted = false;
+        };
     },[]);
-
-    // useEffect(()=>{
-    //     BackHandler.addEventListener('hardwareBackPress', ()=>{
-    //         return true;
-    //     });
-    //     //prevendo voltar splash
-    // },[]);
 
     return (
         <Container>
@@ -133,39 +138,6 @@ export const Home = () => {
                     }
                 />
             }
-            {/* <PanGestureHandler onGestureEvent={onGestureEvent}>
-                <Animated.View 
-                    style={[
-                        myCarsButtonStyle,
-                        {
-                            position: 'absolute',
-                            bottom: 13,
-                            right: 22
-                        }
-                    ]}
-                >
-                    <ButtonAnimated 
-                        onPress={handleMyCarsOpen}
-                        style={[styles.button, {backgroundColor:theme.colors.main}]}
-                    >
-                        <Ionicons 
-                            name="ios-car-sport"
-                            size={32}
-                            color={theme.colors.line}
-                        />
-                    </ButtonAnimated>
-                </Animated.View>
-            </PanGestureHandler> */}
          </Container>
     );
 }
-
-// const styles = StyleSheet.create({
-//     button: {
-//         width: 60,
-//         height: 60,
-//         borderRadius: 30,
-//         justifyContent: 'center',
-//         alignItems: 'center'
-//     }
-// })
