@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React,{useState} from 'react';
 import { useTheme } from 'styled-components';
 import { BackButton } from '../../components/BackButton';
 import { Feather } from '@expo/vector-icons';
@@ -13,12 +13,17 @@ import {
     PhotoContainer,
     Photo,
     PhotoButton,
-
+    ContentOptions,
+    Options,
+    Option,
+    OptionTitle,
 } from './styles';
 
 export const Profile = () => {
     const theme = useTheme();
     const navigation = useNavigation();
+
+    const [option,setOption] = useState<'dataEdit' | 'passwordEdit'>('dataEdit');
 
     const handleBack = ()=>{
         navigation.goBack();
@@ -55,6 +60,22 @@ export const Profile = () => {
                     </PhotoButton>
                 </PhotoContainer>
             </Header>
+
+            <ContentOptions>
+                <Options>
+                    <Option active={option === 'dataEdit'}>
+                        <OptionTitle active={option === 'dataEdit'}>
+                            Dados
+                        </OptionTitle>
+                    </Option>
+                    <Option active={option === 'passwordEdit'}>
+                        <OptionTitle active={option === 'passwordEdit'}>
+                            Trocar Senha
+                        </OptionTitle>
+                    </Option>
+                </Options>
+            </ContentOptions>
+
 
         </Container>
     );
