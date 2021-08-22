@@ -33,6 +33,10 @@ export const Profile = () => {
 
     }
 
+    const handleOptionChange = (optionSelected:'dataEdit' | 'passwordEdit')=>{
+        setOption(optionSelected);
+    }
+
     return(
         <Container>
             <Header>
@@ -63,12 +67,18 @@ export const Profile = () => {
 
             <ContentOptions>
                 <Options>
-                    <Option active={option === 'dataEdit'}>
+                    <Option 
+                        active={option === 'dataEdit'}
+                        onPress={()=> handleOptionChange('dataEdit')}
+                    >
                         <OptionTitle active={option === 'dataEdit'}>
                             Dados
                         </OptionTitle>
                     </Option>
-                    <Option active={option === 'passwordEdit'}>
+                    <Option 
+                        active={option === 'passwordEdit'}
+                        onPress={()=> handleOptionChange('passwordEdit')}
+                    >
                         <OptionTitle active={option === 'passwordEdit'}>
                             Trocar Senha
                         </OptionTitle>

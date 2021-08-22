@@ -92,7 +92,7 @@ export const Options = styled.View`
     margin-bottom: 24px;
 `;
 
-export const Option = styled.View<OptionProps>`
+export const Option = styled.TouchableOpacity<OptionProps>`
     padding-bottom: 14px;
 
     ${({active})=> active && css`
