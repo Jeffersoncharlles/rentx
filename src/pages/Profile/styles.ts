@@ -1,4 +1,4 @@
-import { BorderlessButton } from 'react-native-gesture-handler';
+import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
@@ -26,13 +26,27 @@ export const HeadTop = styled.View`
 export const HeaderTitle = styled.Text`
     font-size: ${RFValue(25)}px;
     font-family: ${({theme})=>theme.fonts.secondary_600};
-    color: ${({theme})=>theme.colors.background_secondary};;
+    color: ${({theme})=>theme.colors.background_secondary};
 `;
 
 export const LogoutButton = styled(BorderlessButton)`
 
 `;
-export const PhotoButton = styled(BorderlessButton)`
+//rect button tem fundo
+// quando voce colocar posição absoluta
+// voce pode posicionar ele na onde quizzer no container
+// no caso aqui a 10px da parte de baixo 
+// e 10 pc da direita
+export const PhotoButton = styled(RectButton)`
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    background-color: ${({theme})=>theme.colors.main};
+
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
 
 `;
 

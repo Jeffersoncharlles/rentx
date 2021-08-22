@@ -50,7 +50,7 @@ export const Profile = () => {
                         <Feather 
                             name="camera"
                             size={24}
-                            color={theme.colors.main}
+                            color={theme.colors.shape}
                         />
                     </PhotoButton>
                 </PhotoContainer>
