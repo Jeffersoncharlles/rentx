@@ -42,20 +42,41 @@ export const Profile = () => {
     const [driverLicense, setDriverLicense] = useState(user.driver_license);
     const [password, setPassword] = useState('');
     const [option,setOption] = useState<'dataEdit' | 'passwordEdit'>('dataEdit');
-
+/*===============================================================================*/
+/*===============================================================================*/
+/*===============================================================================*/
     const handleBack = ()=>{
         navigation.goBack();
     }
+/*===============================================================================*/
+/*===============================================================================*/
+    const handleSignOut = async ()=>{
+        Alert.alert(
+            'Tem certeza?', 
+            'Se voce sair , irá precisa de internet para-se conecta-se novamente.',
+            [
+                {
+                    text:'Cancelar',
+                    onPress:()=>{},
+                    style:"cancel"
+                },
+                {
+                    text:'Confirmar',
+                    onPress:()=>signOut(),
+                    
+                }
 
-    const handleSignOut = ()=>{
-        signOut();
+            ]
+        )
+        
     }
-
+/*===============================================================================*/
+/*===============================================================================*/
     const handleOptionChange = (optionSelected:'dataEdit' | 'passwordEdit')=>{
         setOption(optionSelected);
     }
-
-
+/*===============================================================================*/
+/*===============================================================================*/
     const handleSelectAvatar =async ()=>{
         //to pegando a imagem da galeria 
         //pegando so imagem
@@ -75,7 +96,8 @@ export const Profile = () => {
             setAvatar(result.uri)
         }
     }
-
+/*===============================================================================*/
+/*===============================================================================*/
     const handleProfileUpdate = async ()=> {
         try {
             const schema = Yup.object().shape({
@@ -107,7 +129,9 @@ export const Profile = () => {
             
         }
     }
-
+/*===============================================================================*/
+/*===============================================================================*/
+/*===============================================================================*/
     return(
         <KeyboardAvoidingView behavior="position" enabled>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

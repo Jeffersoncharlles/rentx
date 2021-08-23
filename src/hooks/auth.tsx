@@ -11,7 +11,9 @@ import { api } from "../services/api";
 
 import {database} from '../database';
 import {User as ModelUser} from '../database/model/User';
-
+/*===============================================================================*/
+/*===============================================================================*/
+/*===============================================================================*/
 //dados do usuário
 interface User {
     id:string;
@@ -43,12 +45,17 @@ interface AuthContextData {
 interface AuthProviderProps{
     children: ReactNode;
 }
-
+/*===============================================================================*/
+/*===============================================================================*/
+/*===============================================================================*/
 //criar contexto do tipo AuthContextData começa com {} do tipo AuthContextData
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 //ele precisa receber um filho que na verdade vai ser as rotas
 //criar o estado de autenticação que vai ser tipo User começa como objeto vazio
+/*===============================================================================*/
+/*===============================================================================*/
+/*===============================================================================*/
 const AuthProvider = ({children}: AuthProviderProps)=>{
     const [data, setData] = useState<User>({} as User)
 
@@ -102,7 +109,9 @@ const AuthProvider = ({children}: AuthProviderProps)=>{
 
         
     }
-
+/*===============================================================================*/
+/*===============================================================================*/
+/*===============================================================================*/
     const signOut = async ()=>{
         try {
             
@@ -119,8 +128,13 @@ const AuthProvider = ({children}: AuthProviderProps)=>{
             throw new Error(error);
         }
     }
-
+/*===============================================================================*/
+/*===============================================================================*/
+/*===============================================================================*/
     const UpdateUser = async (user:User)=>{
+
+        //update de usuário
+        //pega os dados novos e salva no db local
         try {
             const newUser = await database.write(async()=>{
                 const userSelected = database.get<ModelUser>('users').find(data.id);
@@ -140,7 +154,9 @@ const AuthProvider = ({children}: AuthProviderProps)=>{
             throw new Error(error);
         }
     }
-
+/*===============================================================================*/
+/*===============================================================================*/
+/*===============================================================================*/
     useEffect(()=>{
         const loadUserData = async ()=>{
             const userCollection = database.get<ModelUser>('users');
@@ -158,7 +174,9 @@ const AuthProvider = ({children}: AuthProviderProps)=>{
 
     },[]);
 
-
+/*===============================================================================*/
+/*===============================================================================*/
+/*===============================================================================*/
     //authProvider vai prover para todos os filhos 
     //e como se tivesse colocando rotas em vez de filhos
     //assim consigo acessar de todas as rotas o dados do usuário
@@ -171,7 +189,9 @@ const AuthProvider = ({children}: AuthProviderProps)=>{
         </AuthContext.Provider>
     )
 }
-
+/*===============================================================================*/
+/*===============================================================================*/
+/*===============================================================================*/
 //aqui vou criar o hook para usar isso em qualquer interface
 const useAuth = (): AuthContextData =>{
     //criar o context usando o userContext passando AuthContext
@@ -180,6 +200,8 @@ const useAuth = (): AuthContextData =>{
     return context
     //retorna o context
 }
-
+/*===============================================================================*/
+/*===============================================================================*/
+/*===============================================================================*/
 export {AuthProvider, useAuth}
 //exportando para usar em qualquer lugar
