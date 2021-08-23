@@ -9,6 +9,8 @@ import { Input } from '../../components/Input';
 import { PasswordInput } from '../../components/PasswordInput';
 import { Feather } from '@expo/vector-icons';
 
+import * as ImagePicker from 'expo-image-picker';
+
 import {
     Container,
     Header,
@@ -25,22 +27,50 @@ import {
     Section,
 } from './styles';
 
+import { useAuth } from '../../hooks/auth';
+
 export const Profile = () => {
     const theme = useTheme();
     const navigation = useNavigation();
+    const {user, signOut} = useAuth();
 
+    const [avatar, setAvatar] = useState(user.avatar);
+    const [name, setName] = useState(user.name);
+    const [driverLicense, setDriverLicense] = useState(user.driver_license);
+    const [password, setPassword] = useState('');
     const [option,setOption] = useState<'dataEdit' | 'passwordEdit'>('dataEdit');
 
     const handleBack = ()=>{
         navigation.goBack();
     }
 
-    const handleSinOut = ()=>{
-
+    const handleSignOut = ()=>{
+        signOut();
     }
 
     const handleOptionChange = (optionSelected:'dataEdit' | 'passwordEdit')=>{
         setOption(optionSelected);
+    }
+
+
+    const handleSelectAvatar =async ()=>{
+        //to pegando a imagem da galeria 
+        //pegando so imagem
+        // tamanho e qualidade e liberando para editar
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4,4],
+            quality:1,
+        });
+
+        if (result.cancelled) {
+            return;   
+        }
+
+        if (result.uri) {
+            setAvatar(result.uri)
+        }
     }
 
     return(
@@ -53,7 +83,7 @@ export const Profile = () => {
                             <HeaderTitle>
                                 Editar Perfil
                             </HeaderTitle>
-                            <LogoutButton onPress={handleSinOut} >
+                            <LogoutButton onPress={handleSignOut} >
                                 <Feather 
                                     name="power"
                                     size={24}
@@ -62,8 +92,8 @@ export const Profile = () => {
                             </LogoutButton>
                         </HeadTop>
                         <PhotoContainer>
-                            <Photo source={{uri:'https://avatars.githubusercontent.com/u/26746739?v=4'}} />
-                            <PhotoButton onPress={()=>{}} > 
+                           { !!avatar && <Photo source={{uri:avatar}} />}
+                            <PhotoButton onPress={handleSelectAvatar} > 
                                 <Feather 
                                     name="camera"
                                     size={24}
@@ -98,15 +128,20 @@ export const Profile = () => {
                                     iconName="user"
                                     placeholder="nome"
                                     autoCorrect={false}
+                                    defaultValue={user.name}
+                                    onChangeText={setName}
                                 />
                                 <Input 
                                     iconName="mail"
                                     editable={false}
+                                    defaultValue={user.email}
                                 />
                                 <Input 
                                     iconName="credit-card"
                                     placeholder="CNH"
                                     keyboardType="numeric"
+                                    defaultValue={user.driver_license}
+                                    onChangeText={setDriverLicense}
                                 />
                             </Section>
                             :
