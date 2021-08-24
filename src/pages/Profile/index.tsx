@@ -31,11 +31,13 @@ import {
 } from './styles';
 
 import { useAuth } from '../../hooks/auth';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 export const Profile = () => {
     const theme = useTheme();
     const navigation = useNavigation();
     const {user, signOut,UpdateUser} = useAuth();
+    const netInfo = useNetInfo();
 
     const [avatar, setAvatar] = useState(user.avatar);
     const [name, setName] = useState(user.name);
@@ -74,7 +76,12 @@ export const Profile = () => {
 /*===============================================================================*/
 /*===============================================================================*/
     const handleOptionChange = (optionSelected:'dataEdit' | 'passwordEdit')=>{
-        setOption(optionSelected);
+        if (netInfo.isConnected === false && optionSelected ==='passwordEdit') {
+            Alert.alert('Para mudar a senha, conecte-se a internet');
+        }else{
+            setOption(optionSelected);
+        }
+        
     }
 /*===============================================================================*/
 /*===============================================================================*/

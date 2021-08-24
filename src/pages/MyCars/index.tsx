@@ -6,6 +6,7 @@ import {BackButton} from '../../components/BackButton';
 import { useNavigation,useRoute } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 import {AntDesign} from '@expo/vector-icons';
+import { Car as ModelCar } from '../../database/model/car';
 
 import {
     Container,
@@ -27,7 +28,7 @@ import { LoadAnimation } from '../../components/LoadAnimation';
 interface CarProps {
     id: number;
     user_id:number;
-    car: CarDTO;
+    car: ModelCar;
     startDate: string;
     endDate: string;
 }

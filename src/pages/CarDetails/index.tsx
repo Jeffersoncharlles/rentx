@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import {BackButton} from '../../components/BackButton';
 import {ImageSlider} from '../../components/ImageSlider';
 import {Accessory} from '../../components/Accessory';
@@ -29,22 +29,27 @@ import {
     About,
     Accessories,
     Footer,
-    
+    OfflineInfo,
 } from './styles';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 import CarDtos from '../../dtos/CarDTO';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import { Car as ModelCar } from '../../database/model/car';
+import { api } from '../../services/api';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 interface Params {
-    car: CarDtos;
+    car: ModelCar;
 }
 
 export const CarDetails = () => {
     const scrollY = useSharedValue(0);
     const navigation = useNavigation();
     const route = useRoute();
+    const netInfo = useNetInfo();
     const  { car } = route.params as Params;
+    const [carUpdated,setCarUpdated] = useState<CarDtos>({} as CarDtos);
 
     const handleSchedulingRoutes = ()=>{
         navigation.navigate('Scheduling',{car});
@@ -76,6 +81,16 @@ export const CarDetails = () => {
             //animação para sumir o carro aos poucos
         }
     });
+    useEffect(()=>{
+        const fetchCarUpdate = async ()=>{
+            const response = await api.get(`/cars/${car.id}`);
+
+            setCarUpdated(response.data);
+        }
+        if (netInfo.isConnected === true) {
+            fetchCarUpdate();
+        }
+    },[netInfo.isConnected]);
 
     return (
         <Container>
@@ -96,7 +111,8 @@ export const CarDetails = () => {
                     >
                     <CarImages>
                         <ImageSlider 
-                            imagesUrl={car.photos} 
+                            imagesUrl={
+                              !!carUpdated.photos ? carUpdated.photos : [{id: car.thumbnail, photo: car.thumbnail}]} 
                         />
                     </CarImages>
                 </Animated.View>
@@ -121,29 +137,46 @@ export const CarDetails = () => {
                     
                     <Rent>
                         <Period>{car.period}</Period>
-                        <Price>R$ {car.price}</Price>
+                       
+                            <Price>
+                                R$ {netInfo.isConnected == true ? car.price : '...'}  
+                            </Price>
+                        
                     </Rent>
                 </Details>
 
-                <Accessories>
-                    {
-                        car.accessories.map(item=>(
-                            <Accessory 
-                                key={item.type}
-                                name={item.name}
-                                icon={getAccessoriesIcon(item.type)} 
-                            />
-                            ))
+                {  carUpdated.accessories &&
+                    <Accessories>
+                        {
+                            carUpdated.accessories.map(item=>(
+                                <Accessory 
+                                    key={item.type}
+                                    name={item.name}
+                                    icon={getAccessoriesIcon(item.type)} 
+                                />
+                                ))
+                            
+                        }
                         
-                    }
-                    
-                </Accessories>
+                    </Accessories>
+                }
                 <About>
                     {car.about}
                 </About>
             </Animated.ScrollView>
             <Footer>
-                <Button title="Escolher período do aluguel"  color=""  onPress={handleSchedulingRoutes} />
+                <Button 
+                    title="Escolher período do aluguel"  
+                    color="" 
+                    onPress={handleSchedulingRoutes} 
+                    enabled={netInfo.isConnected === true}
+                    />
+                {
+                    netInfo.isConnected === false &&
+                    <OfflineInfo>
+                        Conecte-se a internet para ver mais detalhes e agendar seu carro
+                    </OfflineInfo>
+                }
             </Footer>
          </Container>
     );

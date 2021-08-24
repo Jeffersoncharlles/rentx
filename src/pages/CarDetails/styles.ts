@@ -88,3 +88,13 @@ export const About = styled.Text`
 
     margin-top: 23px;
 `;
+export const OfflineInfo = styled.Text`
+    font-family: ${({theme})=>theme.fonts.primary_400};
+    color: ${({theme})=>theme.colors.main};
+    font-size: ${RFValue(15)}px; 
+
+    text-align: center;
+    line-height: ${RFValue(25)}px;
+
+    margin-top: 23px;
+`;
