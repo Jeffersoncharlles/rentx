@@ -68,10 +68,10 @@ export const Home = () => {
                 return {changes, timestamp: latestVersion}
             },
             pushChanges: async ({changes})=>{
-                // console.log('APP PARA O BACKENDR');
+                // console.log('APP PARA O BACKEND');
                 // console.log(changes);
                 const user = changes.users;
-                await api.post('/users/sync', user);
+                await api.post('/users/sync', user).catch(console.log);
             }
         });
     }

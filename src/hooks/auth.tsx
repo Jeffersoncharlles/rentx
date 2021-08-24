@@ -39,6 +39,7 @@ interface AuthContextData {
     signIn: (credentials: SignInCredentials) => Promise<void>;
     signOut: () => Promise<void>;
     UpdateUser: (user: User)=>Promise<void>;
+    loading:boolean;
 }
 
 //interface do authProvider para tipo o filho
@@ -57,7 +58,8 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 /*===============================================================================*/
 /*===============================================================================*/
 const AuthProvider = ({children}: AuthProviderProps)=>{
-    const [data, setData] = useState<User>({} as User)
+    const [data, setData] = useState<User>({} as User);
+    const [loading,setLoading] = useState(true);
 
     //criar função signin que recebe email e password de SignInCredentials
     const signIn = async ({email, password}: SignInCredentials) => {
@@ -158,19 +160,43 @@ const AuthProvider = ({children}: AuthProviderProps)=>{
 /*===============================================================================*/
 /*===============================================================================*/
     useEffect(()=>{
-        const loadUserData = async ()=>{
-            const userCollection = database.get<ModelUser>('users');
-            const response = await userCollection.query().fetch();
+        let isMounted = true;
 
-            if (response.length > 0) {
-                //as unknown as User forcando tipagem
-              const userData =   response[0]._raw as unknown as User;
-              api.defaults.headers.authorization = `Bearer ${userData.token}`;
-              setData(userData);
+       
+            const loadUserData = async ()=>{
+                try {
+                const userCollection = database.get<ModelUser>('users');
+                const response = await userCollection.query().fetch();
+    
+                    if (response.length > 0) {
+                        //as unknown as User forcando tipagem
+                        const userData =   response[0]._raw as unknown as User;
+                        api.defaults.headers.authorization = `Bearer ${userData.token}`;
+                        if (loading) {
+                            setData(userData);
+                            setLoading(false);
+                        }
+                        
+                        
+                    }
+
+                } catch (error) {
+                    console.log(error);
+                }finally{
+                        if (isMounted) {
+                        
+                    }
+                    
+                }
             }
-            
-        }
+        
+        
         loadUserData();
+        return ()=>{
+            //depois que ele passa por tudo eu seto para falso
+            // ele so seta o set car se for verdadeira
+            setLoading(false);
+        };
 
     },[]);
 
@@ -183,7 +209,7 @@ const AuthProvider = ({children}: AuthProviderProps)=>{
     //e o signIn
     return (
         <AuthContext.Provider 
-            value={{user:data,signIn,signOut,UpdateUser}}
+            value={{user:data,signIn,signOut,UpdateUser,loading}}
         >
             {children}
         </AuthContext.Provider>
