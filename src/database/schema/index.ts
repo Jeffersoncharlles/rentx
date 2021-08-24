@@ -1,6 +1,7 @@
 import { appSchema } from '@nozbe/watermelondb';
 
 import { userSchema } from './userSchema';
+import { carSchema } from './carSchema';
 
 
 //importo os schemas e depois passo para ele as tables
@@ -9,7 +10,8 @@ import { userSchema } from './userSchema';
 const schemas = appSchema({
     version:1,
     tables:[
-        userSchema
+        userSchema,
+        carSchema
     ]
 });
 
