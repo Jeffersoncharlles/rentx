@@ -1,16 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {StatusBar , StyleSheet, BackHandler} from 'react-native';
+import {StatusBar , Button} from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components';
 import { api } from '../../services/api';
-import { Load } from '../../components/Load';
 import CarDTO from '../../dtos/CarDTO';
-
-import { Ionicons } from '@expo/vector-icons';
-
-import {RectButton, PanGestureHandler} from 'react-native-gesture-handler';
-//PanGestureHandler identifica quando user segura e arrasta na tela
+import { Car as ModelCar } from '../../database/model/car';
+import { database } from '../../database';
+import {synchronize} from '@nozbe/watermelondb/sync';
 
 import {useNetInfo} from '@react-native-community/netinfo';
 //verificar se tem internet
@@ -18,12 +15,8 @@ import {useNetInfo} from '@react-native-community/netinfo';
 import Animated ,{
     useSharedValue,
     useAnimatedStyle,
-    useAnimatedGestureHandler,
-    withSpring
 } from 'react-native-reanimated';
-const  ButtonAnimated = Animated.createAnimatedComponent(RectButton);
 
-//withSpring física
 
 
 import Logo from '../../assets/logo.svg';
@@ -39,41 +32,49 @@ import {
     HeaderContent,
     CarList,
 } from './styles';
-import { Alert } from 'react-native';
 
 
 export const Home = () => {
     const netInfo = useNetInfo();
-    const [cars,setCars] = useState([]);
+    const [cars,setCars] = useState<ModelCar[]>([]);
     const [loading,setLoading] = useState(true);
     const navigation = useNavigation();
     const theme = useTheme();
 
-    const positionY = useSharedValue(0);
-    const positionX = useSharedValue(0);
-    const myCarsButtonStyle = useAnimatedStyle(()=>{
-        return{
-            transform: [
-                {translateX: positionX.value},
-                {translateY: positionY.value},
-            ]
-        }
-    });
-    // const onGestureEvent = useAnimatedGestureHandler({
-    //     //start começou active quando esta segurando e o end quando solto
-    //     onStart(e,ctx:any){
-    //         ctx.positionX = positionX.value;
-    //         ctx.positionY = positionY.value;
-    //     },
-    //     onActive(e,ctx:any){
-    //         positionX.value = ctx.positionX + e.translationX;
-    //         positionY.value = ctx.positionY + e.translationY;
-    //     },
-    //     onEnd(){
-    //         positionX.value = withSpring(0);
-    //         positionY.value = withSpring(0);
+    // const positionY = useSharedValue(0);
+    // const positionX = useSharedValue(0);
+    // const myCarsButtonStyle = useAnimatedStyle(()=>{
+    //     return{
+    //         transform: [
+    //             {translateX: positionX.value},
+    //             {translateY: positionY.value},
+    //         ]
     //     }
     // });
+
+    //pullChanges e a função que vai buscar atualização
+    //lasPulledAt // timestamps de quando teve atualização
+    //push e o que envia as mudanças do lado do app
+
+    const offlineSynchronize = async ()=>{
+        await synchronize({
+            database,
+            pullChanges: async ({lastPulledAt})=>{
+                const {data} = await api
+                    .get(`cars/sync/pull?lastPulledVersion=${lastPulledAt || 0 }`);
+                const {changes,latestVersion} = data;
+                // console.log('BACKEND PARA O APP');
+                // console.log(data);
+                return {changes, timestamp: latestVersion}
+            },
+            pushChanges: async ({changes})=>{
+                // console.log('APP PARA O BACKENDR');
+                // console.log(changes);
+                const user = changes.users;
+                await api.post('/users/sync', user);
+            }
+        });
+    }
 
     const handleCarDetailsRoutes = (car : CarDTO)=>{
         navigation.navigate('CarDetails', {car});
@@ -86,9 +87,11 @@ export const Home = () => {
 
         const fetchCar = async ()=>{
           try {
-            const response = await api.get('/cars');
+            //const {data} = await api.get('/cars');
+                const carCollection = database.get<ModelCar>('cars');
+                const data = await carCollection.query().fetch();
             if (isMounted) {
-                setCars(response.data);
+                setCars(data);
             }
             
           } catch (error) {
@@ -110,10 +113,8 @@ export const Home = () => {
     },[]);
     
     useEffect(()=>{
-        if (netInfo.isConnected) {
-            Alert.alert('voce esta online');
-        }else{
-            Alert.alert('voce esta offline');
+        if (netInfo.isConnected === true) {
+            offlineSynchronize();
         }
     },[netInfo.isConnected]);
 
@@ -138,6 +139,7 @@ export const Home = () => {
                     }
                 </HeaderContent>
             </Header>
+            
             
             {loading ? <LoadAnimation/> :
                 <CarList
