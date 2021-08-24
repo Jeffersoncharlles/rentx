@@ -12,6 +12,9 @@ import { Ionicons } from '@expo/vector-icons';
 import {RectButton, PanGestureHandler} from 'react-native-gesture-handler';
 //PanGestureHandler identifica quando user segura e arrasta na tela
 
+import {useNetInfo} from '@react-native-community/netinfo';
+//verificar se tem internet
+
 import Animated ,{
     useSharedValue,
     useAnimatedStyle,
@@ -36,9 +39,11 @@ import {
     HeaderContent,
     CarList,
 } from './styles';
+import { Alert } from 'react-native';
 
 
 export const Home = () => {
+    const netInfo = useNetInfo();
     const [cars,setCars] = useState([]);
     const [loading,setLoading] = useState(true);
     const navigation = useNavigation();
@@ -103,6 +108,14 @@ export const Home = () => {
             isMounted = false;
         };
     },[]);
+    
+    useEffect(()=>{
+        if (netInfo.isConnected) {
+            Alert.alert('voce esta online');
+        }else{
+            Alert.alert('voce esta offline');
+        }
+    },[netInfo.isConnected]);
 
     return (
         <Container>

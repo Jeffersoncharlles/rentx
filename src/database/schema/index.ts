@@ -8,7 +8,7 @@ import { carSchema } from './carSchema';
 // e a versão
 //e exporta
 const schemas = appSchema({
-    version:1,
+    version:2,
     tables:[
         userSchema,
         carSchema
