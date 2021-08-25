@@ -25,24 +25,29 @@ import {
 } from './styles';
 import { Car } from '../../components/Car';
 import { LoadAnimation } from '../../components/LoadAnimation';
+import { format,parseISO } from 'date-fns';
 interface CarProps {
     id: number;
     user_id:number;
-    car: ModelCar;
+    car: CarDTO;
     startDate: string;
     endDate: string;
 }
 
+interface DataProps{
+    id:string;
+    car:ModelCar;
+    start_date:string;
+    end_date: string;
+}
 
 export const MyCars = () => {
     const navigation = useNavigation();
     const route = useRoute();
-    const [cars, setCars] = useState<CarProps[]>([]);
+    const [cars, setCars] = useState<DataProps[]>([]);
     const [loading, setLoading] = useState(true);
 
-    const userId = 8;
     const theme = useTheme();
-
 
     const handleBack = () =>{
         navigation.goBack();
@@ -52,9 +57,15 @@ export const MyCars = () => {
     useEffect(()=>{
         const fetchCars  = async ()=>{
             try {
-                const resp = await api.get(`/schedules_byuser?user_id=${userId}`);
-                //console.log(resp.data);
-                setCars(resp.data);
+                const resp = await api.get(`/rentals`);
+                const dataFormatted = resp.data.map((data:DataProps)=>{
+                    return{
+                        car:data.car,
+                        start_date:format(parseISO(data.start_date),'dd/MM/yyyy'),
+                        end_date:format(parseISO(data.end_date),'dd/MM/yyyy'),
+                    }
+                })
+                setCars(dataFormatted);
             } catch (error) {
                 console.log(error);
             }finally{
@@ -94,7 +105,7 @@ export const MyCars = () => {
                     </AppoIntments>
                     <FlatList 
                         data={cars}
-                        keyExtractor={item =>item.id.toString()}
+                        keyExtractor={item =>String(item.id)}
                         showsHorizontalScrollIndicator={false}
                         renderItem={({item})=>(
                             <CarWapper>
@@ -102,14 +113,14 @@ export const MyCars = () => {
                                 <CarFooter>
                                     <CarFooterTitle>Período</CarFooterTitle>
                                     <CarFooterPeriod>
-                                        <CarFooterDate>{item.startDate}</CarFooterDate>
+                                        <CarFooterDate>{item.start_date}</CarFooterDate>
                                         <AntDesign 
                                             name="arrowright"
                                             size={20}
                                             color={theme.colors.title}
                                             style={{marginHorizontal: 10}}
                                         />
-                                        <CarFooterDate>{item.endDate}</CarFooterDate>
+                                        <CarFooterDate>{item.end_date}</CarFooterDate>
                                     </CarFooterPeriod>
                                 </CarFooter>
                             </CarWapper>
