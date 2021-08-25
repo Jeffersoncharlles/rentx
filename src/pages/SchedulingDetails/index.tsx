@@ -42,6 +42,7 @@ import { format } from 'date-fns';
 import { getPlatformDate } from '../../utils/getPlatformDate';
 import { api } from '../../services/api';
 import { Alert } from 'react-native';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 interface RentalPeriod{
     startFormatted: string;
@@ -56,6 +57,8 @@ interface Params {
 export const SchedulingDetails = () => {
     const [loading, setLoading] = useState(true);
     const [rentalPeriod, setRentalPeriod] = useState<RentalPeriod>({} as RentalPeriod);
+    const [carUpdated,setCarUpdated] = useState<CarDtos>({} as CarDtos);
+    const netInfo = useNetInfo();
     const theme = useTheme();
     const navigation = useNavigation();
     const route = useRoute();
@@ -66,32 +69,25 @@ export const SchedulingDetails = () => {
 
 
     const handleSchedulingCompleteRoutes = async () =>{
-        const schedulesByCar = await api.get(`/schedules_bycars/${car.id}`);
-
-        const unavailable_dates = [
-            ...schedulesByCar.data.unavailable_dates,
-            ...dates,
-        ];
+        
 
         const userId = 1;
 
-        await api.post(`/schedules_byuser`,{
-            user_id: 8,
-            car,
-            startDate: format(getPlatformDate(new Date (dates[0])), 'dd/MM/yyyy'),
-            endDate:    format(getPlatformDate(new Date (dates[dates.length - 1])), 'dd/MM/yyyy')
-        });
-
-        api.put(`/schedules_bycars/${car.id}`, {
-            id:car.id,
-            unavailable_dates
-        })
-        .then(() => navigation.navigate('Confirmation',{
+        await api.post(`/rentals`,{
+            user_id: userId,
+            car_id:car.id,
+            start_date: new Date (dates[0]),
+            end_date:  new Date (dates[dates.length - 1]),
+            total:rentTotal
+        }).then(() => navigation.navigate('Confirmation',{
             title:'Carro alugado!',
             message:`Agora você só precisa ir\naté a concessionária da RENTX\npegar o seu automóvel.`,
             nextScreenRoute: 'Home'
         }))
-        .catch(()=> { Alert.alert("Não foi possível confirmar o agendamento."); setLoading(true);});
+        .catch(()=> { 
+            Alert.alert("Não foi possível confirmar o agendamento."); 
+            setLoading(true);
+        });
 
         
     }
@@ -106,6 +102,16 @@ export const SchedulingDetails = () => {
             endFormatted: format(getPlatformDate(new Date (dates[dates.length - 1])), 'dd/MM/yyyy'),
         })
     },[]);
+    useEffect(()=>{
+        const fetchCarUpdate = async ()=>{
+            const response = await api.get(`/cars/${car.id}`);
+
+            setCarUpdated(response.data);
+        }
+        if (netInfo.isConnected === true) {
+            fetchCarUpdate();
+        }
+    },[netInfo.isConnected]);
 
     return (
         <Container>
@@ -114,7 +120,7 @@ export const SchedulingDetails = () => {
             </Header>
             <CarImages>
                 <ImageSlider 
-                    imagesUrl={car.photos} 
+                    imagesUrl={ !!carUpdated.photos ? carUpdated.photos : [{id: car.thumbnail, photo: car.thumbnail}]} 
                 />
             </CarImages>
             <Content >
@@ -130,9 +136,10 @@ export const SchedulingDetails = () => {
                     </Rent>
                 </Details>
 
-                <Accessories>
-                    {
-                            car.accessories.map(item=>(
+                {  carUpdated.accessories &&
+                    <Accessories>
+                        {
+                            carUpdated.accessories.map(item=>(
                                 <Accessory 
                                     key={item.type}
                                     name={item.name}
@@ -141,7 +148,9 @@ export const SchedulingDetails = () => {
                                 ))
                             
                         }
-                </Accessories>
+                        
+                    </Accessories>
+                }
                <RentalPeriod>
                    <CalendarIcon>
                         <Feather 
