@@ -6,6 +6,8 @@
 
 - React Native
 - Typescript
+- watermelon DB
+
 
 ## License
 
